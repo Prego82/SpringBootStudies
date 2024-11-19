@@ -1,0 +1,9 @@
+spring.application.name=hr
+spring.profiles.active=smart
+raises.defaultRaise=0
+raises.minRaise=2
+raises.midRaise=5
+raises.maxRaise=10
+raises.minMonths=30
+raises.midMonths=60
+raises.maxMonths=120
