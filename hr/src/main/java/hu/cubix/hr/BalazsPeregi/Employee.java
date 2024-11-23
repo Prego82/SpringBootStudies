@@ -16,6 +16,9 @@ public class Employee {
 		this.startTime = startTime;
 	}
 
+	public Employee() {
+	}
+
 	public long getId() {
 		return id;
 	}
