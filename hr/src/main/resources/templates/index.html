@@ -10,17 +10,21 @@
 	<table border="1">
 		<thead>
 			<th colspan="2" style="padding: 10px;">Id</th>
+			<th colspan="2" style="padding: 10px;">Name</th>
 			<th colspan="2" style="padding: 10px;">Job</th>
 			<th colspan="2" style="padding: 10px;">Salary</th>
 			<th colspan="2" style="padding: 10px;">StartTime</th>
+			<th colspan="2" style="padding: 10px;"></th>
 		</thead>
 		<tbody>
 			<tr th:each="employee : ${employees}">
 				<td colspan="2" style="padding: 10px;" th:text="${employee.id}"></td>
+				<td colspan="2" style="padding: 10px;"><a th:href="@{/{id}(id=${employee.id})}" th:text="${employee.name}"></a></td>
 				<td colspan="2" style="padding: 10px;" th:text="${employee.job}"></td>
 				<td colspan="2" style="padding: 10px;" th:text="${employee.salary}"></td>
 				<td colspan="2" style="padding: 10px;"
 					th:text="${employee.startTime}"></td>
+				<td colspan="2" style="padding: 10px;"><a th:href="@{/delete/{id}(id=${employee.id})}" th:text="Delete"></a></td>	
 			</tr>
 		</tbody>
 	</table>
@@ -32,6 +36,11 @@
 					<td colspan="2" style="padding: 10px;"><label for="id">Id:</label></td>
 					<td colspan="2" style="padding: 10px;"><input id="id"
 						th:field="*{id}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding: 10px;"><label for="name">Name:</label></td>
+					<td colspan="2" style="padding: 10px;"><input id="name"
+						th:field="*{name}" /></td>
 				</tr>
 				<tr>
 					<td colspan="2" style="padding: 10px;"><label for="job">Job:</label></td>

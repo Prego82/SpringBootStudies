@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Employee form</title>
+</head>
+<body>
+	<form th:object="${selectedEmployee}" method="post" th:action="@{/save}">
+		<input type="hidden" th:field="*{id}" />
+		<table>
+			<tbody>
+				<tr>
+					<td colspan="2" style="padding: 10px;"><label for="name">Name:</label></td>
+					<td colspan="2" style="padding: 10px;"><input id="name"
+						th:field="*{name}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding: 10px;"><label for="job">Job:</label></td>
+					<td colspan="2" style="padding: 10px;"><input id="job"
+						th:field="*{job}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding: 10px;"><label for="salary">Salary:</label></td>
+					<td colspan="2" style="padding: 10px;"><input id="salary"
+						th:field="*{Salary}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="padding: 10px;"><label for="startTime">StartTime:</label></td>
+					<td colspan="2" style="padding: 10px;"><input id="startTime" type="datetime-local"
+						th:field="*{startTime}" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="form-row">
+			<input type="submit" value="Modify" />
+		</div>
+	</form>
+</body>
+</html>

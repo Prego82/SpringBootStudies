@@ -15,11 +15,11 @@ public class HrApplication implements CommandLineRunner {
 	@Autowired
 	SalaryService salaryService;
 
-	private Employee junior = new Employee(1, "Junior", 1000, LocalDateTime.of(2022, 11, 19, 0, 0));
-	private Employee mid = new Employee(2, "Mid", 2000, LocalDateTime.of(2022, 5, 19, 0, 0));
-	private Employee mid2 = new Employee(3, "Mid2", 2000, LocalDateTime.of(2022, 1, 1, 0, 0));
-	private Employee senior = new Employee(4, "Senior", 5000, LocalDateTime.of(2019, 1, 1, 0, 0));
-	private Employee architect = new Employee(5, "Architect", 10000, LocalDateTime.of(2014, 1, 1, 0, 0));
+	private Employee junior = new Employee(1, "Little Jonny", "Junior", 1000, LocalDateTime.of(2022, 11, 19, 0, 0));
+	private Employee mid = new Employee(2, "Middle Jonny", "Mid", 2000, LocalDateTime.of(2022, 5, 19, 0, 0));
+	private Employee mid2 = new Employee(3, "Middle Jonny Jr.", "Mid2", 2000, LocalDateTime.of(2022, 1, 1, 0, 0));
+	private Employee senior = new Employee(4, "Senio Jonny", "Senior", 5000, LocalDateTime.of(2019, 1, 1, 0, 0));
+	private Employee architect = new Employee(5, "Old Jonny", "Architect", 10000, LocalDateTime.of(2014, 1, 1, 0, 0));
 
 	public static void main(String[] args) {
 		SpringApplication.run(HrApplication.class, args);
