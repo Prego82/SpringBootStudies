@@ -13,9 +13,13 @@ public class SalaryService {
 	}
 
 	public void setNewSalary(Employee employee) {
-		double raisePercentage = employeeService.getPayRaisePercent(employee) / 100.0;
+		double raisePercentage = getRaisePercent(employee) / 100.0;
 		double raiseAmount = employee.getSalary() * raisePercentage;
 		employee.setSalary((int) (employee.getSalary() + raiseAmount));
+	}
+
+	public double getRaisePercent(Employee employee) {
+		return employeeService.getPayRaisePercent(employee);
 	}
 
 }

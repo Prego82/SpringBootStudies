@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import hu.cubix.hr.BalazsPeregi.Employee;
 import hu.cubix.hr.BalazsPeregi.dto.EmployeeDto;
+import hu.cubix.hr.BalazsPeregi.service.SalaryService;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -33,6 +36,9 @@ public class EmployeeRestController {
 		employees.put(4L, new EmployeeDto(4, "Senior", 5000, LocalDateTime.of(2019, 1, 1, 0, 0)));
 		employees.put(5L, new EmployeeDto(5, "Architect", 10000, LocalDateTime.of(2014, 1, 1, 0, 0)));
 	}
+
+	@Autowired
+	SalaryService salaryService;
 
 	@GetMapping
 	public List<EmployeeDto> queryAll() {
@@ -76,5 +82,10 @@ public class EmployeeRestController {
 	@GetMapping("/salary") // inkább(params = "salaryHigherThan") akkor nem kell a /salary link mögé
 	public List<EmployeeDto> findEmployeeBySalary(@RequestParam int salaryHigherThan) {
 		return employees.values().stream().filter(e -> e.getSalary() > salaryHigherThan).collect(Collectors.toList());
+	}
+
+	@GetMapping("/raisePercentage")
+	public double findEmployeeBySalary(@RequestBody Employee employee) {
+		return salaryService.getRaisePercent(employee);
 	}
 }

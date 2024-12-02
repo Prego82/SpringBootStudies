@@ -512,6 +512,27 @@
 			"response": []
 		},
 		{
+			"name": "Query Employee Salay Raise",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/employees/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Query Company by Id",
 			"request": {
 				"method": "GET",
