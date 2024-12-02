@@ -73,7 +73,7 @@ public class EmployeeRestController {
 		employees.remove(id);
 	}
 
-	@GetMapping("/salary")
+	@GetMapping("/salary") // inkább(params = "salaryHigherThan") akkor nem kell a /salary link mögé
 	public List<EmployeeDto> findEmployeeBySalary(@RequestParam int salaryHigherThan) {
 		return employees.values().stream().filter(e -> e.getSalary() > salaryHigherThan).collect(Collectors.toList());
 	}
