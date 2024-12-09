@@ -117,7 +117,7 @@
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -164,7 +164,7 @@
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -458,6 +458,13 @@
 					"path": [
 						"api",
 						"companies"
+					],
+					"query": [
+						{
+							"key": "full",
+							"value": "true",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -514,10 +521,19 @@
 		{
 			"name": "Query Employee Salay Raise",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"6\",\r\n    \"job\": \"Manager\",\r\n    \"salary\": \"5000\",\r\n    \"startTime\": \"2020-11-25T00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/api/employees/6",
+					"raw": "http://localhost:8080/api/employees/raisePercentage",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -526,7 +542,7 @@
 					"path": [
 						"api",
 						"employees",
-						"6"
+						"raisePercentage"
 					]
 				}
 			},
@@ -548,6 +564,13 @@
 						"api",
 						"companies",
 						"1"
+					],
+					"query": [
+						{
+							"key": "full",
+							"value": "true",
+							"disabled": true
+						}
 					]
 				}
 			},
