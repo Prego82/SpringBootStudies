@@ -84,7 +84,7 @@ public class EmployeeRestController {
 		return employees.values().stream().filter(e -> e.getSalary() > salaryHigherThan).collect(Collectors.toList());
 	}
 
-	@GetMapping("/raisePercentage")
+	@PostMapping("/raisePercentage")
 	public double findEmployeeBySalary(@RequestBody Employee employee) {
 		return salaryService.getRaisePercent(employee);
 	}
