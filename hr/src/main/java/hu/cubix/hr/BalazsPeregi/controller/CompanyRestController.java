@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hu.cubix.hr.BalazsPeregi.dto.CompanyDto;
 import hu.cubix.hr.BalazsPeregi.dto.EmployeeDto;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/companies")
@@ -85,7 +86,7 @@ public class CompanyRestController {
 
 	@PostMapping("/addEmployee/{companyId}")
 	public ResponseEntity<CompanyDto> addEmployeeToCompany(@PathVariable long companyId,
-			@RequestBody EmployeeDto newEmployee) {
+			@RequestBody @Valid EmployeeDto newEmployee) {
 		if (!companies.containsKey(companyId)) {
 			return ResponseEntity.notFound().build();
 		}
@@ -105,7 +106,7 @@ public class CompanyRestController {
 
 	@PutMapping("/replaceAllEmployees/{companyId}")
 	public ResponseEntity<CompanyDto> replaceAllEmployeesInCompany(@PathVariable long companyId,
-			@RequestBody List<EmployeeDto> newEmployees) {
+			@RequestBody @Valid List<EmployeeDto> newEmployees) {
 		if (!companies.containsKey(companyId)) {
 			return ResponseEntity.notFound().build();
 		}

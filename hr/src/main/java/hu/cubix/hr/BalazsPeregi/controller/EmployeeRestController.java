@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import hu.cubix.hr.BalazsPeregi.Employee;
 import hu.cubix.hr.BalazsPeregi.dto.EmployeeDto;
 import hu.cubix.hr.BalazsPeregi.service.SalaryService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -30,11 +31,11 @@ public class EmployeeRestController {
 	private Map<Long, EmployeeDto> employees = new HashMap<>();
 
 	{
-		employees.put(1L, new EmployeeDto(1, "Junior", 1000, LocalDateTime.of(2022, 11, 19, 0, 0)));
-		employees.put(2L, new EmployeeDto(2, "Mid", 2000, LocalDateTime.of(2022, 5, 19, 0, 0)));
-		employees.put(3L, new EmployeeDto(3, "Mid2", 2000, LocalDateTime.of(2022, 1, 1, 0, 0)));
-		employees.put(4L, new EmployeeDto(4, "Senior", 5000, LocalDateTime.of(2019, 1, 1, 0, 0)));
-		employees.put(5L, new EmployeeDto(5, "Architect", 10000, LocalDateTime.of(2014, 1, 1, 0, 0)));
+		employees.put(1L, new EmployeeDto(1, "Kis Miksa", "Junior", 1000, LocalDateTime.of(2022, 11, 19, 0, 0)));
+		employees.put(2L, new EmployeeDto(2, "Közép Hunor", "Mid", 2000, LocalDateTime.of(2022, 5, 19, 0, 0)));
+		employees.put(3L, new EmployeeDto(3, "Ifj. Közép Hunor", "Mid2", 2000, LocalDateTime.of(2022, 1, 1, 0, 0)));
+		employees.put(4L, new EmployeeDto(4, "Nagy László", "Senior", 5000, LocalDateTime.of(2019, 1, 1, 0, 0)));
+		employees.put(5L, new EmployeeDto(5, "Mérnök Géza", "Architect", 10000, LocalDateTime.of(2014, 1, 1, 0, 0)));
 	}
 
 	@Autowired
@@ -46,7 +47,7 @@ public class EmployeeRestController {
 	}
 
 	@PostMapping
-	public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto newEmployeeDto) {
+	public ResponseEntity<EmployeeDto> addEmployee(@RequestBody @Valid EmployeeDto newEmployeeDto) {
 		if (employees.containsKey(newEmployeeDto.getId())) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -65,7 +66,8 @@ public class EmployeeRestController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable long id, @RequestBody EmployeeDto newEmployeeDto) {
+	public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable long id,
+			@RequestBody @Valid EmployeeDto newEmployeeDto) {
 		newEmployeeDto.setId(id);
 		if (employees.containsKey(id)) {
 			employees.put(id, newEmployeeDto);
