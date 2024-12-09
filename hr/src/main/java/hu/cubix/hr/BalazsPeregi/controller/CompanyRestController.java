@@ -80,7 +80,7 @@ public class CompanyRestController {
 		return ResponseEntity.ok(companies.get(companyId));
 	}
 
-	@PostMapping("/removeEmployee/{companyId}/{employeeId}")
+	@DeleteMapping("/removeEmployee/{companyId}/{employeeId}")
 	public ResponseEntity<CompanyDto> removeEmployeeFromCompany(@PathVariable long companyId,
 			@PathVariable long employeeId) {
 		if (!companies.containsKey(companyId)) {
@@ -90,7 +90,7 @@ public class CompanyRestController {
 		return ResponseEntity.ok(companies.get(companyId));
 	}
 
-	@PostMapping("/replaceAllEmployees/{companyId}")
+	@PutMapping("/replaceAllEmployees/{companyId}")
 	public ResponseEntity<CompanyDto> replaceAllEmployeesInCompany(@PathVariable long companyId,
 			@RequestBody List<EmployeeDto> newEmployees) {
 		if (!companies.containsKey(companyId)) {
