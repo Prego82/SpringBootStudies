@@ -1,10 +1,6 @@
 package hu.cubix.hr.BalazsPeregi.controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import hu.cubix.hr.BalazsPeregi.Employee;
 import hu.cubix.hr.BalazsPeregi.dto.EmployeeDto;
+import hu.cubix.hr.BalazsPeregi.mapper.EmployeeMapper;
+import hu.cubix.hr.BalazsPeregi.model.Employee;
+import hu.cubix.hr.BalazsPeregi.service.AbstractEmployeeService;
 import hu.cubix.hr.BalazsPeregi.service.SalaryService;
 import jakarta.validation.Valid;
 
@@ -28,40 +26,37 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/employees")
 public class EmployeeRestController {
 
-	private Map<Long, EmployeeDto> employees = new HashMap<>();
+	@Autowired
+	private AbstractEmployeeService employeeService;
 
-	{
-		employees.put(1L, new EmployeeDto(1, "Kis Miksa", "Junior", 1000, LocalDateTime.of(2022, 11, 19, 0, 0)));
-		employees.put(2L, new EmployeeDto(2, "Közép Hunor", "Mid", 2000, LocalDateTime.of(2022, 5, 19, 0, 0)));
-		employees.put(3L, new EmployeeDto(3, "Ifj. Közép Hunor", "Mid2", 2000, LocalDateTime.of(2022, 1, 1, 0, 0)));
-		employees.put(4L, new EmployeeDto(4, "Nagy László", "Senior", 5000, LocalDateTime.of(2019, 1, 1, 0, 0)));
-		employees.put(5L, new EmployeeDto(5, "Mérnök Géza", "Architect", 10000, LocalDateTime.of(2014, 1, 1, 0, 0)));
-	}
+	@Autowired
+	private EmployeeMapper employeeMapper;
 
 	@Autowired
 	SalaryService salaryService;
 
 	@GetMapping
 	public List<EmployeeDto> queryAll() {
-		return new ArrayList<>(employees.values());
+		return employeeMapper.employeesToDtos(employeeService.findAll());
 	}
 
 	@PostMapping
 	public ResponseEntity<EmployeeDto> addEmployee(@RequestBody @Valid EmployeeDto newEmployeeDto) {
-		if (employees.containsKey(newEmployeeDto.getId())) {
+		Employee employee = employeeMapper.dtoToEmployee(newEmployeeDto);
+		if (employeeService.findById(employee.getId()) != null) {
 			return ResponseEntity.badRequest().build();
 		}
-		employees.put(newEmployeeDto.getId(), newEmployeeDto);
+		employeeService.save(employee);
 		return ResponseEntity.ok(newEmployeeDto);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<EmployeeDto> findEmployee(@PathVariable long id) {
-		EmployeeDto employeeDto = employees.get(id);
-		if (employeeDto == null) {
+		Employee employee = employeeService.findById(id);
+		if (employee == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			return ResponseEntity.ok(employeeDto);
+			return ResponseEntity.ok(employeeMapper.employeeToDto(employee));
 		}
 	}
 
@@ -69,8 +64,9 @@ public class EmployeeRestController {
 	public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable long id,
 			@RequestBody @Valid EmployeeDto newEmployeeDto) {
 		newEmployeeDto.setId(id);
-		if (employees.containsKey(id)) {
-			employees.put(id, newEmployeeDto);
+		Employee employee = employeeMapper.dtoToEmployee(newEmployeeDto);
+		if (employeeService.findById(employee.getId()) != null) {
+			employeeService.save(employee);
 			return ResponseEntity.ok(newEmployeeDto);
 		}
 		return ResponseEntity.badRequest().build();
@@ -78,12 +74,13 @@ public class EmployeeRestController {
 
 	@DeleteMapping("/{id}")
 	public void removeEmployee(@PathVariable long id) {
-		employees.remove(id);
+		employeeService.delete(id);
 	}
 
 	@GetMapping("/salary") // inkább(params = "salaryHigherThan") akkor nem kell a /salary link mögé
 	public List<EmployeeDto> findEmployeeBySalary(@RequestParam int salaryHigherThan) {
-		return employees.values().stream().filter(e -> e.getSalary() > salaryHigherThan).collect(Collectors.toList());
+		return employeeMapper.employeesToDtos(employeeService.findAll().stream()
+				.filter(e -> e.getSalary() > salaryHigherThan).collect(Collectors.toList()));
 	}
 
 	@PostMapping("/raisePercentage")

@@ -2,7 +2,7 @@ package hu.cubix.hr.BalazsPeregi.service;
 
 import org.springframework.stereotype.Service;
 
-import hu.cubix.hr.BalazsPeregi.Employee;
+import hu.cubix.hr.BalazsPeregi.model.Employee;
 
 @Service
 public class SalaryService {

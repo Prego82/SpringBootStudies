@@ -1,14 +1,19 @@
-package hu.cubix.hr.BalazsPeregi;
+package hu.cubix.hr.BalazsPeregi.model;
 
 import java.time.LocalDateTime;
 
-@Deprecated
+/**
+ * Model class
+ */
 public class Employee {
 	private long id;
 	private String name;
 	private String job;
 	private int salary;
 	private LocalDateTime startTime;
+
+	public Employee() {
+	}
 
 	public Employee(long id, String name, String job, int salary, LocalDateTime startTime) {
 		super();
@@ -17,9 +22,6 @@ public class Employee {
 		this.job = job;
 		this.salary = salary;
 		this.startTime = startTime;
-	}
-
-	public Employee() {
 	}
 
 	public long getId() {
@@ -62,8 +64,4 @@ public class Employee {
 		this.startTime = startTime;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("Employee [id=%s, job=%s, salary=%s, startTime=%s]", id, job, salary, startTime);
-	}
 }

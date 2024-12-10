@@ -5,10 +5,10 @@ import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import hu.cubix.hr.BalazsPeregi.Employee;
 import hu.cubix.hr.BalazsPeregi.config.DynamicEmployeeConfigurationProperty;
+import hu.cubix.hr.BalazsPeregi.model.Employee;
 
-public class SmartEmployeeService implements EmployeeService {
+public class SmartEmployeeService extends AbstractEmployeeService {
 
 //	@Value("${defaultRaise}")
 //	private int defaultRaisePercentage;
