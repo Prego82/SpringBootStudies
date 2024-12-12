@@ -84,7 +84,12 @@ public class EmployeeRestController {
 	}
 
 	@PostMapping("/raisePercentage")
-	public double findEmployeeBySalary(@RequestBody Employee employee) {
-		return salaryService.getRaisePercent(employee);
+	public double findEmployeeBySalary(@RequestBody EmployeeDto employeeDto) {
+		Employee employee = employeeService.findById(employeeDto.getId());
+		if (employee == null) {
+			return -1d;
+		} else {
+			return salaryService.getRaisePercent(employee);
+		}
 	}
 }
