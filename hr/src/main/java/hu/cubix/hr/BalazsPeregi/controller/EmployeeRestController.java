@@ -46,8 +46,8 @@ public class EmployeeRestController {
 		if (employeeService.findById(employee.getId()) != null) {
 			return ResponseEntity.badRequest().build();
 		}
-		employeeService.save(employee);
-		return ResponseEntity.ok(newEmployeeDto);
+		Employee savedEmployee = employeeService.save(employee);
+		return ResponseEntity.ok(employeeMapper.employeeToDto(savedEmployee));
 	}
 
 	@GetMapping("/{id}")
@@ -65,11 +65,8 @@ public class EmployeeRestController {
 			@RequestBody @Valid EmployeeDto newEmployeeDto) {
 		newEmployeeDto.setId(id);
 		Employee employee = employeeMapper.dtoToEmployee(newEmployeeDto);
-		if (employeeService.findById(employee.getId()) != null) {
-			employeeService.save(employee);
-			return ResponseEntity.ok(newEmployeeDto);
-		}
-		return ResponseEntity.badRequest().build();
+		Employee updatedEmployee = employeeService.save(employee);
+		return ResponseEntity.ok(employeeMapper.employeeToDto(updatedEmployee));
 	}
 
 	@DeleteMapping("/{id}")

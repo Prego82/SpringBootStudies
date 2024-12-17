@@ -5,10 +5,11 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class EmployeeDto {
 
-	@Positive
+	@PositiveOrZero
 	private long id;
 	@NotEmpty
 	private String name;

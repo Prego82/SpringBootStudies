@@ -2,10 +2,18 @@ package hu.cubix.hr.BalazsPeregi.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 /**
  * Model class
  */
+@Entity
 public class Employee {
+
+	@Id
+	@GeneratedValue
 	private long id;
 	private String name;
 	private String job;
