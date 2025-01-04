@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 /**
  * Model class
@@ -19,6 +20,8 @@ public class Employee {
 	private String job;
 	private int salary;
 	private LocalDateTime startTime;
+	@ManyToOne
+	private Company company;
 
 	public Employee() {
 	}
@@ -70,6 +73,14 @@ public class Employee {
 
 	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 }

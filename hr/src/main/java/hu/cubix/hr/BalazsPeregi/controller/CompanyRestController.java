@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import hu.cubix.hr.BalazsPeregi.config.Views;
 import hu.cubix.hr.BalazsPeregi.dto.CompanyDto;
 import hu.cubix.hr.BalazsPeregi.dto.EmployeeDto;
 import hu.cubix.hr.BalazsPeregi.mapper.CompanyMapper;
@@ -34,11 +36,16 @@ public class CompanyRestController {
 	private CompanyMapper companyMapper;
 
 	@Autowired
-	private EmployeeMapper employeMapper;
+	private EmployeeMapper employeeMapper;
 
 	@GetMapping
-	public List<CompanyDto> queryAll(@RequestParam Optional<Boolean> full) {
-		return companyMapper.comapniesToDtos(companyService.findAll(full));
+	public MappingJacksonValue queryAll(@RequestParam Optional<Boolean> full) {
+		List<Company> companies = companyService.findAll();
+		List<CompanyDto> comapnyDtos = companyMapper.comapniesToDtos(companies);
+		MappingJacksonValue mapping = new MappingJacksonValue(comapnyDtos);
+		Class<?> viewClass = full.orElse(false) ? Views.Detailed.class : Views.Summary.class;
+		mapping.setSerializationView(viewClass);
+		return mapping;
 	}
 
 	@PostMapping
@@ -52,15 +59,13 @@ public class CompanyRestController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CompanyDto> findCompany(@PathVariable long id, @RequestParam Optional<Boolean> full) {
+	public MappingJacksonValue findCompany(@PathVariable long id, @RequestParam Optional<Boolean> full) {
 		Company company = companyService.findById(id);
-		if (company == null) {
-			return ResponseEntity.notFound().build();
-		} else if (full.orElse(false)) {
-			return ResponseEntity.ok(companyMapper.companyToDto(company));
-		} else {
-			return ResponseEntity.ok(companyMapper.companyToDto(CompanyService.companyWithoutEmployees(company)));
-		}
+		CompanyDto comapnyDto = companyMapper.companyToDto(company);
+		MappingJacksonValue mapping = new MappingJacksonValue(comapnyDto);
+		Class<?> viewClass = full.orElse(false) ? Views.Detailed.class : Views.Summary.class;
+		mapping.setSerializationView(viewClass);
+		return mapping;
 	}
 
 	@PutMapping("/{id}")
@@ -86,7 +91,7 @@ public class CompanyRestController {
 		if (company == null) {
 			return ResponseEntity.notFound().build();
 		}
-		company.addEmployee(employeMapper.dtoToEmployee(newEmployee));
+		companyService.addEmployeeToCompany(companyId, employeeMapper.dtoToEmployee(newEmployee));
 		return ResponseEntity.ok(companyMapper.companyToDto(companyService.findById(companyId)));
 	}
 
@@ -108,7 +113,7 @@ public class CompanyRestController {
 		if (company == null) {
 			return ResponseEntity.notFound().build();
 		}
-		company.setEmployees(employeMapper.dtosToEmployees(newEmployees));
+		company.setEmployees(employeeMapper.dtosToEmployees(newEmployees));
 		return ResponseEntity.ok(companyMapper.companyToDto(companyService.findById(companyId)));
 	}
 }

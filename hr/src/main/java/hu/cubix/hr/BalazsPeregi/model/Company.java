@@ -3,12 +3,25 @@ package hu.cubix.hr.BalazsPeregi.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Company {
+	@Id
+	@GeneratedValue
 	private long id;
 	private String registrationNumber;
 	private String name;
 	private String address;
+	@OneToMany(mappedBy = "company")
 	private List<Employee> employees = new ArrayList<>();
+
+	public Company() {
+
+	}
 
 	public Company(long id, String registrationNumber, String name, String address) {
 		this.id = id;
@@ -58,6 +71,7 @@ public class Company {
 	}
 
 	public void addEmployee(Employee newEmployee) {
+		newEmployee.setCompany(this);
 		employees.add(newEmployee);
 	}
 
