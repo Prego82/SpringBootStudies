@@ -1,5 +1,6 @@
 package hu.cubix.hr.BalazsPeregi.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,37 +13,41 @@ import jakarta.transaction.Transactional;
 @Service
 public abstract class AbstractEmployeeService implements EmployeeService {
 
-//	@PersistenceContext
-//	private EntityManager em;
-
 	@Autowired
 	private EmployeeRepository repo;
 
 	@Transactional
 	public Employee save(Employee employee) {
-//		if (findById(employee.getId()) != null) {
-//			return em.merge(employee);
-//		} else {
-//			em.persist(employee);
-//			return employee;
-//		}
 		return repo.save(employee);
 	}
 
 	public List<Employee> findAll() {
-//		return em.createQuery("SELECT e FROM Employee e ORDER BY id", Employee.class).getResultList();
 		return repo.findAll();
 	}
 
 	public Employee findById(long id) {
-//		return em.find(Employee.class, id);
 		return repo.findById(id).orElse(null);
 	}
 
 	@Transactional
 	public void delete(long id) {
-//		em.remove(findById(id));
 		repo.deleteById(id);
+	}
+
+	public List<Employee> findBySalaryGreaterThan(Integer salary) {
+		return repo.findBySalaryGreaterThan(salary);
+	}
+
+	public List<Employee> findByJob(String job) {
+		return repo.findByJob(job);
+	}
+
+	public List<Employee> findByPrefix(String prefix) {
+		return repo.findByNameIgnoreCaseStartingWith(prefix);
+	}
+
+	public List<Employee> findByStartTimeIsBetween(LocalDateTime from, LocalDateTime to) {
+		return repo.findByStartTimeIsBetween(from, to);
 	}
 
 	@Override

@@ -216,7 +216,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": \"5\",\n    \"registrationNumber\": \"258\",\n    \"name\": \"AMD\",\n    \"address\": \"Brazil\"\n}",
+					"raw": "{\n    \"registrationNumber\": \"258\",\n    \"name\": \"AMD\",\n    \"address\": \"Brazil\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -269,7 +269,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/employees/152",
+					"raw": "http://localhost:8080/api/employees/202",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -278,7 +278,7 @@
 					"path": [
 						"api",
 						"employees",
-						"152"
+						"202"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -361,7 +361,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/employees/152",
+					"raw": "http://localhost:8080/api/employees/202",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -370,7 +370,7 @@
 					"path": [
 						"api",
 						"employees",
-						"152"
+						"202"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -449,7 +449,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/companies?full=true",
+					"raw": "http://localhost:8080/api/companies?full=false",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -462,7 +462,7 @@
 					"query": [
 						{
 							"key": "full",
-							"value": "true"
+							"value": "false"
 						}
 					]
 				}
@@ -502,7 +502,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/employees/152",
+					"raw": "http://localhost:8080/api/employees/202",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -511,7 +511,49 @@
 					"path": [
 						"api",
 						"employees",
-						"152"
+						"202"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Employee by Attribute",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees"
+					],
+					"query": [
+						{
+							"key": "job",
+							"value": "Junior",
+							"disabled": true
+						},
+						{
+							"key": "prefix",
+							"value": "Dr. ",
+							"disabled": true
+						},
+						{
+							"key": "startDateFrom",
+							"value": "2022-01-01T00:00:00",
+							"disabled": true
+						},
+						{
+							"key": "startDateTo",
+							"value": "2022-12-31T23:59:59",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -553,7 +595,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/companies/1",
+					"raw": "http://localhost:8080/api/companies/1?full=false",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -567,8 +609,7 @@
 					"query": [
 						{
 							"key": "full",
-							"value": "true",
-							"disabled": true
+							"value": "false"
 						}
 					]
 				}

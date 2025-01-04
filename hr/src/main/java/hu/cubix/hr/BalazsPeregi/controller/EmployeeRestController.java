@@ -1,9 +1,11 @@
 package hu.cubix.hr.BalazsPeregi.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,5 +93,22 @@ public class EmployeeRestController {
 		} else {
 			return salaryService.getRaisePercent(employee);
 		}
+	}
+
+	@GetMapping(params = { "job", "!prefix", "!startDateFrom", "!startDateTo" })
+	public List<EmployeeDto> findEmployeeByJob(@RequestParam(required = true) String job) {
+		return employeeMapper.employeesToDtos(employeeService.findByJob(job));
+	}
+
+	@GetMapping(params = { "!job", "prefix", "!startDateFrom", "!startDateTo" })
+	public List<EmployeeDto> findEmployeeByPrefix(@RequestParam(required = true) String prefix) {
+		return employeeMapper.employeesToDtos(employeeService.findByPrefix(prefix));
+	}
+
+	@GetMapping(params = { "!job", "!prefix", "startDateFrom", "startDateTo" })
+	public List<EmployeeDto> findEmployeeByPrefix(
+			@RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDateFrom,
+			@RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDateTo) {
+		return employeeMapper.employeesToDtos(employeeService.findByStartTimeIsBetween(startDateFrom, startDateTo));
 	}
 }
