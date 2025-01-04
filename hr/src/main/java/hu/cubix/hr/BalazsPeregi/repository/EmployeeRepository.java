@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import hu.cubix.hr.BalazsPeregi.model.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-	List<Employee> findBySalaryGreatherThan(Integer salary);
+	List<Employee> findBySalaryGreaterThan(Integer salary);
 
 	List<Employee> findByJob(String job);
 

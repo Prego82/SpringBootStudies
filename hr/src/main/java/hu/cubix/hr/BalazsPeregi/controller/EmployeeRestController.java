@@ -63,6 +63,9 @@ public class EmployeeRestController {
 	@PutMapping("/{id}")
 	public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable long id,
 			@RequestBody @Valid EmployeeDto newEmployeeDto) {
+		if (employeeService.findById(id) == null) {
+			return ResponseEntity.badRequest().build();
+		}
 		newEmployeeDto.setId(id);
 		Employee employee = employeeMapper.dtoToEmployee(newEmployeeDto);
 		Employee updatedEmployee = employeeService.save(employee);
@@ -74,7 +77,7 @@ public class EmployeeRestController {
 		employeeService.delete(id);
 	}
 
-	@GetMapping("/salary") // inkább(params = "salaryHigherThan") akkor nem kell a /salary link mögé
+	@GetMapping("/salary")
 	public List<EmployeeDto> findEmployeeBySalary(@RequestParam int salaryHigherThan) {
 		return employeeMapper.employeesToDtos(employeeService.findAll().stream()
 				.filter(e -> e.getSalary() > salaryHigherThan).collect(Collectors.toList()));

@@ -36,7 +36,10 @@ class EmployeeRestControllerIntegrationTest {
 		List<EmployeeDto> employeesAfter = getAllEmployee();
 		assertThat(employeesAfter.subList(0, employeesBefore.size())).usingRecursiveFieldByFieldElementComparator()
 				.containsExactlyElementsOf(employeesBefore);
-		assertThat(employeesAfter.get(employeesAfter.size() - 1)).usingRecursiveComparison().isEqualTo(newEmployee);
+		assertThat(employeesAfter.get(employeesAfter.size() - 1).getName()).isEqualTo(newEmployee.getName());
+		assertThat(employeesAfter.get(employeesAfter.size() - 1).getJob()).isEqualTo(newEmployee.getJob());
+		assertThat(employeesAfter.get(employeesAfter.size() - 1).getSalary()).isEqualTo(newEmployee.getSalary());
+		assertThat(employeesAfter.get(employeesAfter.size() - 1).getStartTime()).isEqualTo(newEmployee.getStartTime());
 	}
 
 	@Test
