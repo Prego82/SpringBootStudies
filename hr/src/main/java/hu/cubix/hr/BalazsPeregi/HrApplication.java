@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import hu.cubix.hr.BalazsPeregi.model.Employee;
+import hu.cubix.hr.BalazsPeregi.service.InitDbService;
 import hu.cubix.hr.BalazsPeregi.service.SalaryService;
 
 @SpringBootApplication
@@ -15,6 +16,9 @@ public class HrApplication implements CommandLineRunner {
 
 	@Autowired
 	SalaryService salaryService;
+
+	@Autowired
+	InitDbService init;
 
 	private Employee junior = new Employee(1, "Little Jonny", "Junior", 1000, LocalDateTime.of(2022, 11, 19, 0, 0));
 	private Employee mid = new Employee(2, "Middle Jonny", "Mid", 2000, LocalDateTime.of(2022, 5, 19, 0, 0));
@@ -37,6 +41,8 @@ public class HrApplication implements CommandLineRunner {
 		salaryService.setNewSalary(architect);
 		System.err.println("Salaries after raise: ");
 		printAllEmployees();
+		init.clearDb();
+		init.insertTestData();
 	}
 
 	/**

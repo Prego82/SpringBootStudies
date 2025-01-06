@@ -30,6 +30,12 @@ public class Company {
 		this.address = address;
 	}
 
+	public Company(String registrationNumber, String name, String address) {
+		this.registrationNumber = registrationNumber;
+		this.name = name;
+		this.address = address;
+	}
+
 	public long getId() {
 		return id;
 	}
