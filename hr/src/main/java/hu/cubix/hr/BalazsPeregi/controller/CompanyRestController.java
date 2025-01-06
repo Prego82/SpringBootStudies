@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import hu.cubix.hr.BalazsPeregi.config.Views;
 import hu.cubix.hr.BalazsPeregi.dto.CompanyDto;
 import hu.cubix.hr.BalazsPeregi.dto.EmployeeDto;
+import hu.cubix.hr.BalazsPeregi.dto.JobSalaryDto;
 import hu.cubix.hr.BalazsPeregi.mapper.CompanyMapper;
 import hu.cubix.hr.BalazsPeregi.mapper.EmployeeMapper;
+import hu.cubix.hr.BalazsPeregi.mapper.JobSalaryMapper;
 import hu.cubix.hr.BalazsPeregi.model.Company;
+import hu.cubix.hr.BalazsPeregi.model.JobSalary;
 import hu.cubix.hr.BalazsPeregi.service.CompanyService;
 import jakarta.validation.Valid;
 
@@ -37,6 +40,9 @@ public class CompanyRestController {
 
 	@Autowired
 	private EmployeeMapper employeeMapper;
+
+	@Autowired
+	private JobSalaryMapper jobSalaryMapper;
 
 	@GetMapping
 	public List<CompanyDto> queryAll(@RequestParam Optional<Boolean> full) {
@@ -115,5 +121,24 @@ public class CompanyRestController {
 		}
 		company.setEmployees(employeeMapper.dtosToEmployees(newEmployees));
 		return ResponseEntity.ok(companyMapper.companyToDto(companyService.findById(companyId)));
+	}
+
+	@GetMapping(value = "/employee", params = "salary")
+	public List<CompanyDto> queryAllWithSalaryHigher(@RequestParam Integer salary) {
+		List<Company> companies = companyService.findCompaniesWithAtLeastOneEmployeeWithSalaryHigherThan(salary);
+		return companyMapper.companiesToDtos(companies);
+	}
+
+	@GetMapping(value = "/employee", params = "numOfEmployees")
+	public List<CompanyDto> queryAllWithNumOfEmployeesHigherThan(@RequestParam Integer numOfEmployees) {
+		List<Company> companies = companyService.findCompaniesWithAtLeastNumOfEmployees(numOfEmployees);
+		return companyMapper.companiesToDtos(companies);
+	}
+
+	@GetMapping(value = "/employee", params = "companyId")
+	public List<JobSalaryDto> queryAvgSalaries(@RequestParam Integer companyId) {
+		List<JobSalary> avgSalaries = companyService.queryAvgSalaries(companyId);
+		List<JobSalaryDto> salariesToDto = jobSalaryMapper.salariesToDto(avgSalaries);
+		return salariesToDto;
 	}
 }

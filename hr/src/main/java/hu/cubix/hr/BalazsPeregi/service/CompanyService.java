@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import hu.cubix.hr.BalazsPeregi.model.Company;
 import hu.cubix.hr.BalazsPeregi.model.Employee;
+import hu.cubix.hr.BalazsPeregi.model.JobSalary;
 import hu.cubix.hr.BalazsPeregi.repository.CompanyRepository;
 import jakarta.transaction.Transactional;
 
@@ -41,6 +42,18 @@ public class CompanyService {
 			company.addEmployee(newEmployee);
 		}
 		repo.save(company);
+	}
+
+	public List<Company> findCompaniesWithAtLeastOneEmployeeWithSalaryHigherThan(Integer salary) {
+		return repo.findCompaniesWithAtLeastOneEmployeeWithSalaryHigherThan(salary);
+	}
+
+	public List<Company> findCompaniesWithAtLeastNumOfEmployees(Integer numOfEmployees) {
+		return repo.findCompaniesWithMoreThanParameterEmployees(numOfEmployees);
+	}
+
+	public List<JobSalary> queryAvgSalaries(Integer companyId) {
+		return repo.listAvgSalaryOfEmployees(companyId);
 	}
 
 }

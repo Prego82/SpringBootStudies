@@ -470,6 +470,43 @@
 			"response": []
 		},
 		{
+			"name": "Query All Comapnies With employee filter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/companies/employee?companyId=1556",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies",
+						"employee"
+					],
+					"query": [
+						{
+							"key": "salary",
+							"value": "5000",
+							"disabled": true
+						},
+						{
+							"key": "numOfEmployees",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "companyId",
+							"value": "1556"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Query All Employees with salary higher than",
 			"request": {
 				"method": "GET",
