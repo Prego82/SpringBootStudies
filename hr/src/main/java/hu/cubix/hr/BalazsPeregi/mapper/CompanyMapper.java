@@ -18,10 +18,10 @@ public interface CompanyMapper {
 	@Named("summary")
 	public CompanyDto companyToSummaryDto(Company company);
 
-	public List<CompanyDto> comapniesToDtos(List<Company> companies);
+	public List<CompanyDto> companiesToDtos(List<Company> companies);
 
 	@IterableMapping(qualifiedByName = "summary")
-	public List<CompanyDto> comapniesToSummaryDtos(List<Company> companies);
+	public List<CompanyDto> companiesToSummaryDtos(List<Company> companies);
 
 	public Company dtoToCompany(CompanyDto company);
 

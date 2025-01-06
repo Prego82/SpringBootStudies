@@ -39,13 +39,13 @@ public class CompanyRestController {
 	private EmployeeMapper employeeMapper;
 
 	@GetMapping
-	public MappingJacksonValue queryAll(@RequestParam Optional<Boolean> full) {
+	public List<CompanyDto> queryAll(@RequestParam Optional<Boolean> full) {
 		List<Company> companies = companyService.findAll();
-		List<CompanyDto> comapnyDtos = companyMapper.comapniesToDtos(companies);
-		MappingJacksonValue mapping = new MappingJacksonValue(comapnyDtos);
-		Class<?> viewClass = full.orElse(false) ? Views.Detailed.class : Views.Summary.class;
-		mapping.setSerializationView(viewClass);
-		return mapping;
+		if (full.orElse(false)) {
+			return companyMapper.companiesToDtos(companies);
+		} else {
+			return companyMapper.companiesToSummaryDtos(companies);
+		}
 	}
 
 	@PostMapping
