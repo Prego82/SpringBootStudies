@@ -18,8 +18,8 @@ public class InitDbService {
 	private EmployeeRepository employeeRepo;
 
 	public void clearDb() {
-		companyRepo.deleteAll();
 		employeeRepo.deleteAll();
+		companyRepo.deleteAll();
 	}
 
 	public void insertTestData() {

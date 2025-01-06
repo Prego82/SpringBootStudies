@@ -3,26 +3,23 @@ package hu.cubix.hr.BalazsPeregi.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
-import hu.cubix.hr.BalazsPeregi.config.Views;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public class CompanyDto {
 	@PositiveOrZero
-	@JsonView(Views.Summary.class)
+//	@JsonView(Views.Summary.class)
 	private long id;
 	@NotEmpty
-	@JsonView(Views.Summary.class)
+//	@JsonView(Views.Summary.class)
 	private String registrationNumber;
 	@NotEmpty
-	@JsonView(Views.Summary.class)
+//	@JsonView(Views.Summary.class)
 	private String name;
 	@NotEmpty
-	@JsonView(Views.Summary.class)
+//	@JsonView(Views.Summary.class)
 	private String address;
-	@JsonView(Views.Detailed.class)
+//	@JsonView(Views.Detailed.class)
 	private List<EmployeeDto> employees = new ArrayList<>();
 
 	public CompanyDto(long id, String registrationNumber, String name, String address) {
