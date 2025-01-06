@@ -449,7 +449,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/companies?full=false",
+					"raw": "http://localhost:8080/api/companies?full=true",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -462,7 +462,7 @@
 					"query": [
 						{
 							"key": "full",
-							"value": "false"
+							"value": "true"
 						}
 					]
 				}
@@ -611,6 +611,48 @@
 							"key": "full",
 							"value": "false"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clear All data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/init/clear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"init",
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fill initial data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/init/init",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"init",
+						"init"
 					]
 				}
 			},
