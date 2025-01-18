@@ -1,6 +1,7 @@
 package hu.cubix.hr.BalazsPeregi.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,12 +36,11 @@ public class Employee {
 		this.startTime = startTime;
 	}
 
-	public Employee(String name, String job, int salary, LocalDateTime startTime, Company company) {
+	public Employee(String name, String job, int salary, LocalDateTime startTime) {
 		this.name = name;
 		this.job = job;
 		this.salary = salary;
 		this.startTime = startTime;
-		this.company = company;
 	}
 
 	public long getId() {
@@ -89,6 +89,26 @@ public class Employee {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Employee other = (Employee) obj;
+		return id == other.id;
 	}
 
 }

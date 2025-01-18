@@ -1,5 +1,6 @@
 package hu.cubix.hr.BalazsPeregi.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -16,7 +17,7 @@ public class Company {
 	private String name;
 	private String address;
 	@OneToMany(mappedBy = "company")
-	private List<Employee> employees;
+	private List<Employee> employees = new ArrayList<>();
 
 	public Company() {
 
@@ -80,11 +81,8 @@ public class Company {
 		employees.add(newEmployee);
 	}
 
-	public void removeEmployee(long employeeId) {
-		for (int i = 0; i < employees.size(); i++) {
-			if (employees.get(i).getId() == employeeId) {
-				employees.remove(i);
-			}
-		}
+	public void removeEmployee(Employee employee) {
+		employee.setCompany(null);
+		employees.remove(employee);
 	}
 }

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
+//@JsonView(Views.Detailed.class)
 public class EmployeeDto {
 
 	@PositiveOrZero

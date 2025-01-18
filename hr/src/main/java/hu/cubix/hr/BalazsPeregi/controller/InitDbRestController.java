@@ -33,9 +33,7 @@ public class InitDbRestController {
 	@GetMapping("/init")
 	public List<CompanyDto> insertTestData() {
 		init.insertTestData();
-		List<Company> companies = companyService.findAll();// This somehow does not fills employee list @first call IDK
-															// why is the
-															// same call as in CompanyRestController
+		List<Company> companies = companyService.findAll();
 		return mapper.companiesToDtos(companies);
 	}
 }
