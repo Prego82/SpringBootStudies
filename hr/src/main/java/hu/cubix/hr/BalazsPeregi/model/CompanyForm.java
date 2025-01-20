@@ -1,16 +1,25 @@
 package hu.cubix.hr.BalazsPeregi.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum CompanyForm {
-	LIMITED_PARTNERSHIP(1, "Limited Partnership"), LLC(2, "LLC"), CORPORATION(3, "Corporation");
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
+@Entity
+public class CompanyForm {
+
+	@Id
+	@GeneratedValue
 	private long id;
 	private String name;
 
-	private CompanyForm(long id, String name) {
-		this.id = id;
+	public CompanyForm() {
+	}
+
+	public CompanyForm(String name) {
 		this.name = name;
 	}
 
@@ -31,14 +40,24 @@ public enum CompanyForm {
 		this.name = name;
 	}
 
-	@JsonCreator
-	public static CompanyForm findByName(String name) {
-		for (CompanyForm form : CompanyForm.values()) {
-			if (form.getName().equalsIgnoreCase(name)) {
-				return form;
-			}
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
 		}
-		return null;
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		CompanyForm other = (CompanyForm) obj;
+		return id == other.id;
 	}
 
 }

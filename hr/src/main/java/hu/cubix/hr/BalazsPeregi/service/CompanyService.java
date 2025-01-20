@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.cubix.hr.BalazsPeregi.model.Company;
+import hu.cubix.hr.BalazsPeregi.model.CompanyForm;
 import hu.cubix.hr.BalazsPeregi.model.Employee;
 import hu.cubix.hr.BalazsPeregi.model.JobSalary;
+import hu.cubix.hr.BalazsPeregi.repository.CompanyFormRepository;
 import hu.cubix.hr.BalazsPeregi.repository.CompanyRepository;
 import hu.cubix.hr.BalazsPeregi.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
@@ -22,8 +24,16 @@ public class CompanyService {
 	@Autowired
 	private EmployeeRepository employeeRepo;
 
+	@Autowired
+	private CompanyFormRepository companyFormRepo;
+
 	@Transactional
 	public Company save(Company company) {
+		CompanyForm compForm = findCompanyFormByName(company.getForm().getName());
+		if (compForm == null) {
+			return null;
+		}
+		company.setForm(compForm);
 		return repo.save(company);
 	}
 
@@ -88,6 +98,10 @@ public class CompanyService {
 
 	public List<JobSalary> queryAvgSalaries(Integer companyId) {
 		return repo.listAvgSalaryOfEmployees(companyId);
+	}
+
+	public CompanyForm findCompanyFormByName(String companyFormName) {
+		return companyFormRepo.findByName(companyFormName);
 	}
 
 }

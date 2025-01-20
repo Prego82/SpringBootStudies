@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -17,6 +18,7 @@ public class Company {
 	private String registrationNumber;
 	private String name;
 	private String address;
+	@ManyToOne
 	private CompanyForm form;
 	@OneToMany(mappedBy = "company")
 	private List<Employee> employees = new ArrayList<>();

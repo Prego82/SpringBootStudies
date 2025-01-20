@@ -58,8 +58,11 @@ public class CompanyRestController {
 		if (companyService.findById(company.getId()) != null) {
 			return ResponseEntity.badRequest().build();
 		}
-		Company savedNewCompany = companyService.save(company);
-		return ResponseEntity.ok(companyMapper.companyToDto(savedNewCompany));
+		Company savedCompany = companyService.save(company);
+		if (savedCompany == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok(companyMapper.companyToDto(savedCompany));
 	}
 
 	@GetMapping("/{id}")
@@ -78,8 +81,8 @@ public class CompanyRestController {
 		newCompanyDto.setId(id);
 		Company company = companyService.findById(id);
 		if (company != null) {
-			return ResponseEntity
-					.ok(companyMapper.companyToDto(companyService.save(companyMapper.dtoToCompany(newCompanyDto))));
+			Company modifiedCompany = companyMapper.dtoToCompany(newCompanyDto);
+			return ResponseEntity.ok(companyMapper.companyToDto(companyService.save(modifiedCompany)));
 		}
 		return ResponseEntity.badRequest().build();
 	}

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import hu.cubix.hr.BalazsPeregi.model.CompanyForm;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,7 +19,6 @@ public class CompanyDto {
 	@NotEmpty
 	private String address;
 	@NotEmpty
-	@JsonDeserialize(using = CompanyFormDeserializer.class)
 	private CompanyForm form;
 	private List<EmployeeDto> employees = new ArrayList<>();
 

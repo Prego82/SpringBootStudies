@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import hu.cubix.hr.BalazsPeregi.model.Company;
 import hu.cubix.hr.BalazsPeregi.model.CompanyForm;
 import hu.cubix.hr.BalazsPeregi.model.Employee;
+import hu.cubix.hr.BalazsPeregi.repository.CompanyFormRepository;
 import hu.cubix.hr.BalazsPeregi.repository.CompanyRepository;
 import hu.cubix.hr.BalazsPeregi.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
@@ -19,9 +20,13 @@ public class InitDbService {
 	@Autowired
 	private EmployeeRepository employeeRepo;
 
+	@Autowired
+	private CompanyFormRepository companyFormRepo;
+
 	public void clearDb() {
 		employeeRepo.deleteAll();
 		companyRepo.deleteAll();
+		companyFormRepo.deleteAll();
 	}
 
 	@Transactional
@@ -42,11 +47,15 @@ public class InitDbService {
 		Employee menedzsElek = employeeRepo
 				.save(new Employee("Menedzs Elek", "Manager", 5000, LocalDateTime.of(2022, 11, 25, 0, 0)));
 
-		Company apple = companyRepo.save(new Company("123", "Apple", "USA", CompanyForm.LLC));
-		Company ibm = companyRepo.save(new Company("456", "IBM", "India", CompanyForm.CORPORATION));
-		Company intel = companyRepo.save(new Company("789", "Intel", "China", CompanyForm.CORPORATION));
-		Company google = companyRepo.save(new Company("147", "Google", "Canada", CompanyForm.CORPORATION));
-		Company amd = companyRepo.save(new Company("258", "AMD", "Brazil", CompanyForm.LIMITED_PARTNERSHIP));
+		CompanyForm limitedPartnership = companyFormRepo.save(new CompanyForm("Limited Partnership"));
+		CompanyForm llc = companyFormRepo.save(new CompanyForm("LLC"));
+		CompanyForm corporation = companyFormRepo.save(new CompanyForm("Corporation"));
+
+		Company apple = companyRepo.save(new Company("123", "Apple", "USA", llc));
+		Company ibm = companyRepo.save(new Company("456", "IBM", "India", corporation));
+		Company intel = companyRepo.save(new Company("789", "Intel", "China", corporation));
+		Company google = companyRepo.save(new Company("147", "Google", "Canada", corporation));
+		Company amd = companyRepo.save(new Company("258", "AMD", "Brazil", limitedPartnership));
 
 		apple.addEmployee(littleJonny);
 		apple.addEmployee(tesztElek);
