@@ -74,7 +74,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": \"7\",\n    \"name\": \"Menedzs Elek\",\n    \"job\": \"Manager\",\n    \"salary\": \"5000\",\n    \"startTime\": \"2022-11-25T00:00\"\n}",
+					"raw": "{\n\t\"id\": \"2206\",\n    \"name\": \"Menedzs Elek\",\n    \"job\": \"Manager\",\n    \"salary\": \"5000\",\n    \"startTime\": \"2022-11-25T00:00\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -82,7 +82,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/companies/addEmployee/1",
+					"raw": "http://localhost:8080/api/companies/addEmployee/2204",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,7 +92,7 @@
 						"api",
 						"companies",
 						"addEmployee",
-						"1"
+						"2204"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -121,7 +121,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n        {\n            \"id\": 6,\n            \"name\": \"Menedzs Elek\",\n            \"job\": \"Manager\",\n            \"salary\": 5000,\n            \"startTime\": \"2022-11-25T00:00:00\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Főnök Béla\",\n            \"job\": \"CEO\",\n            \"salary\": 50000,\n            \"startTime\": \"2024-12-02T00:00:00\"\n        }\n]",
+					"raw": "[\n        {\n            \"id\": 6,\n            \"name\": \"Menedzs Elekné\",\n            \"job\": \"Manager\",\n            \"salary\": 5000,\n            \"startTime\": \"2022-11-25T00:00:00\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Főnök Béla\",\n            \"job\": \"CEO\",\n            \"salary\": 50000,\n            \"startTime\": \"2024-12-02T00:00:00\"\n        }\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -129,7 +129,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/companies/replaceAllEmployees/1",
+					"raw": "http://localhost:8080/api/companies/replaceAllEmployees/2303",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -139,7 +139,7 @@
 						"api",
 						"companies",
 						"replaceAllEmployees",
-						"1"
+						"2303"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -168,7 +168,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": \"6\",\n    \"name\": \"Menedzs Elek\",\n    \"job\": \"Manager\",\n    \"salary\": \"5000\",\n    \"startTime\": \"2022-11-25T00:00\"\n}",
+					"raw": "{\n\t\"id\": \"2758\",\n    \"name\": \"Menedzs Elek\",\n    \"job\": \"Manager\",\n    \"salary\": \"5000\",\n    \"startTime\": \"2022-11-25T00:00\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -176,7 +176,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/companies/removeEmployee/1/6",
+					"raw": "http://localhost:8080/api/companies/removeEmployee/2206/2758",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -186,8 +186,8 @@
 						"api",
 						"companies",
 						"removeEmployee",
-						"1",
-						"6"
+						"2206",
+						"2758"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -216,7 +216,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"registrationNumber\": \"258\",\n    \"name\": \"AMD\",\n    \"address\": \"Brazil\"\n}",
+					"raw": "{\n    \"registrationNumber\": \"369\",\n    \"name\": \"BYD\",\n    \"address\": \"China\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -307,7 +307,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": \"1\",\n    \"registrationNumber\": \"369\",\n    \"name\": \"Apple\",\n    \"address\": \"USA\"\n}",
+					"raw": "{\n\t\"id\": \"1607\",\n    \"registrationNumber\": \"369\",\n    \"name\": \"BYD\",\n    \"address\": \"Hungary\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -315,7 +315,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/companies/1",
+					"raw": "http://localhost:8080/api/companies/1657",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -324,7 +324,7 @@
 					"path": [
 						"api",
 						"companies",
-						"1"
+						"1657"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -632,7 +632,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/companies/1?full=false",
+					"raw": "http://localhost:8080/api/companies/2206?full=true",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -641,12 +641,12 @@
 					"path": [
 						"api",
 						"companies",
-						"1"
+						"2206"
 					],
 					"query": [
 						{
 							"key": "full",
-							"value": "false"
+							"value": "true"
 						}
 					]
 				}
