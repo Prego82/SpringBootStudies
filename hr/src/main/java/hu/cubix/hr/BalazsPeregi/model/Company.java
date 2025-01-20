@@ -10,12 +10,14 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Company {
+
 	@Id
 	@GeneratedValue
 	private long id;
 	private String registrationNumber;
 	private String name;
 	private String address;
+	private CompanyForm form;
 	@OneToMany(mappedBy = "company")
 	private List<Employee> employees = new ArrayList<>();
 
@@ -23,17 +25,19 @@ public class Company {
 
 	}
 
-	public Company(long id, String registrationNumber, String name, String address) {
+	public Company(long id, String registrationNumber, String name, String address, CompanyForm form) {
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
+		this.form = form;
 	}
 
-	public Company(String registrationNumber, String name, String address) {
+	public Company(String registrationNumber, String name, String address, CompanyForm form) {
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
+		this.form = form;
 	}
 
 	public long getId() {
@@ -74,6 +78,14 @@ public class Company {
 
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
+	}
+
+	public CompanyForm getForm() {
+		return form;
+	}
+
+	public void setForm(CompanyForm form) {
+		this.form = form;
 	}
 
 	public void addEmployee(Employee newEmployee) {

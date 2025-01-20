@@ -3,31 +3,34 @@ package hu.cubix.hr.BalazsPeregi.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import hu.cubix.hr.BalazsPeregi.model.CompanyForm;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public class CompanyDto {
 	@PositiveOrZero
-//	@JsonView(Views.Summary.class)
 	private long id;
 	@NotEmpty
-//	@JsonView(Views.Summary.class)
 	private String registrationNumber;
 	@NotEmpty
-//	@JsonView(Views.Summary.class)
 	private String name;
 	@NotEmpty
-//	@JsonView(Views.Summary.class)
 	private String address;
-//	@JsonView(Views.Detailed.class)
+	@NotEmpty
+	@JsonDeserialize(using = CompanyFormDeserializer.class)
+	private CompanyForm form;
 	private List<EmployeeDto> employees = new ArrayList<>();
 
-	public CompanyDto(long id, String registrationNumber, String name, String address) {
+	public CompanyDto(long id, String registrationNumber, String name, String address, CompanyForm form) {
 		super();
 		this.id = id;
 		this.registrationNumber = registrationNumber;
 		this.name = name;
 		this.address = address;
+		this.form = form;
 	}
 
 	public long getId() {
@@ -60,6 +63,19 @@ public class CompanyDto {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public CompanyForm getForm() {
+		return form;
+	}
+
+	public void setForm(CompanyForm form) {
+		this.form = form;
+	}
+
+	@JsonProperty("form")
+	public String getFormName() {
+		return form.getName();
 	}
 
 	public void addEmployee(EmployeeDto newEmployee) {

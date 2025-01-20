@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.cubix.hr.BalazsPeregi.model.Company;
+import hu.cubix.hr.BalazsPeregi.model.CompanyForm;
 import hu.cubix.hr.BalazsPeregi.model.Employee;
 import hu.cubix.hr.BalazsPeregi.repository.CompanyRepository;
 import hu.cubix.hr.BalazsPeregi.repository.EmployeeRepository;
@@ -41,11 +42,11 @@ public class InitDbService {
 		Employee menedzsElek = employeeRepo
 				.save(new Employee("Menedzs Elek", "Manager", 5000, LocalDateTime.of(2022, 11, 25, 0, 0)));
 
-		Company apple = companyRepo.save(new Company("123", "Apple", "USA"));
-		Company ibm = companyRepo.save(new Company("456", "IBM", "India"));
-		Company intel = companyRepo.save(new Company("789", "Intel", "China"));
-		Company google = companyRepo.save(new Company("147", "Google", "Canada"));
-		Company amd = companyRepo.save(new Company("258", "AMD", "Brazil"));
+		Company apple = companyRepo.save(new Company("123", "Apple", "USA", CompanyForm.LLC));
+		Company ibm = companyRepo.save(new Company("456", "IBM", "India", CompanyForm.CORPORATION));
+		Company intel = companyRepo.save(new Company("789", "Intel", "China", CompanyForm.CORPORATION));
+		Company google = companyRepo.save(new Company("147", "Google", "Canada", CompanyForm.CORPORATION));
+		Company amd = companyRepo.save(new Company("258", "AMD", "Brazil", CompanyForm.LIMITED_PARTNERSHIP));
 
 		apple.addEmployee(littleJonny);
 		apple.addEmployee(tesztElek);
