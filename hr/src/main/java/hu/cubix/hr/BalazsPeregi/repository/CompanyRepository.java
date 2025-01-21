@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.SortDefault;
 
 import hu.cubix.hr.BalazsPeregi.model.Company;
 import hu.cubix.hr.BalazsPeregi.model.JobSalary;
@@ -24,5 +25,5 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 	// legenerálja
 
 	@Override
-	Page<Company> findAll(Pageable pageable);
+	Page<Company> findAll(@SortDefault("id") Pageable pageable);
 }
