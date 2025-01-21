@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hu.cubix.hr.BalazsPeregi.model.Employee;
+import hu.cubix.hr.BalazsPeregi.model.Position;
 import hu.cubix.hr.BalazsPeregi.repository.EmployeeRepository;
+import hu.cubix.hr.BalazsPeregi.repository.PositionRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -16,8 +18,16 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 	@Autowired
 	private EmployeeRepository repo;
 
+	@Autowired
+	private PositionRepository posRepo;
+
 	@Transactional
 	public Employee save(Employee employee) {
+		Position position = posRepo.findByName(employee.getPosition().getName());
+		if (position == null) {
+			return null;
+		}
+		employee.setPosition(position);
 		return repo.save(employee);
 	}
 
@@ -39,7 +49,7 @@ public abstract class AbstractEmployeeService implements EmployeeService {
 	}
 
 	public List<Employee> findByJob(String job) {
-		return repo.findByJob(job);
+		return repo.findByPositionName(job);
 	}
 
 	public List<Employee> findByPrefix(String prefix) {

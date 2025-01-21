@@ -49,6 +49,9 @@ public class EmployeeRestController {
 			return ResponseEntity.badRequest().build();
 		}
 		Employee savedEmployee = employeeService.save(employee);
+		if (savedEmployee == null) {
+			return ResponseEntity.badRequest().build();
+		}
 		return ResponseEntity.ok(employeeMapper.employeeToDto(savedEmployee));
 	}
 
@@ -71,6 +74,9 @@ public class EmployeeRestController {
 		newEmployeeDto.setId(id);
 		Employee employee = employeeMapper.dtoToEmployee(newEmployeeDto);
 		Employee updatedEmployee = employeeService.save(employee);
+		if (updatedEmployee == null) {
+			return ResponseEntity.badRequest().build();
+		}
 		return ResponseEntity.ok(employeeMapper.employeeToDto(updatedEmployee));
 	}
 

@@ -18,7 +18,8 @@ public class Employee {
 	@GeneratedValue
 	private long id;
 	private String name;
-	private String job;
+	@ManyToOne
+	private Position position;
 	private int salary;
 	private LocalDateTime startTime;
 	@ManyToOne
@@ -27,18 +28,18 @@ public class Employee {
 	public Employee() {
 	}
 
-	public Employee(long id, String name, String job, int salary, LocalDateTime startTime) {
+	public Employee(long id, String name, Position position, int salary, LocalDateTime startTime) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.job = job;
+		this.position = position;
 		this.salary = salary;
 		this.startTime = startTime;
 	}
 
-	public Employee(String name, String job, int salary, LocalDateTime startTime) {
+	public Employee(String name, Position position, int salary, LocalDateTime startTime) {
 		this.name = name;
-		this.job = job;
+		this.position = position;
 		this.salary = salary;
 		this.startTime = startTime;
 	}
@@ -59,12 +60,12 @@ public class Employee {
 		this.name = name;
 	}
 
-	public String getJob() {
-		return job;
+	public Position getPosition() {
+		return position;
 	}
 
-	public void setJob(String job) {
-		this.job = job;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 
 	public int getSalary() {

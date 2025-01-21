@@ -10,7 +10,7 @@ import hu.cubix.hr.BalazsPeregi.model.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<Employee> findBySalaryGreaterThan(Integer salary);
 
-	List<Employee> findByJob(String job);
+	List<Employee> findByPositionName(String positionName);
 
 	List<Employee> findByNameIgnoreCaseStartingWith(String prefix);
 

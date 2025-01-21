@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import hu.cubix.hr.BalazsPeregi.model.Employee;
+import hu.cubix.hr.BalazsPeregi.model.Position;
+import hu.cubix.hr.BalazsPeregi.model.Qualification;
 
 @Controller
 public class EmployeeController {
@@ -17,11 +19,16 @@ public class EmployeeController {
 	private Map<Long, Employee> employees = new HashMap<>();
 
 	{
-		employees.put(1L, new Employee(1, "Little Jonny", "Junior", 1000, LocalDateTime.of(2022, 11, 19, 0, 0)));
-		employees.put(2L, new Employee(2, "Middle Jonny", "Mid", 2000, LocalDateTime.of(2022, 5, 19, 0, 0)));
-		employees.put(3L, new Employee(3, "Middle Jonny Jr.", "Mid2", 2000, LocalDateTime.of(2022, 1, 1, 0, 0)));
-		employees.put(4L, new Employee(4, "Senio Jonny", "Senior", 5000, LocalDateTime.of(2019, 1, 1, 0, 0)));
-		employees.put(5L, new Employee(5, "Old Jonny", "Architect", 10000, LocalDateTime.of(2014, 1, 1, 0, 0)));
+		employees.put(1L, new Employee(1, "Little Jonny", new Position(0, "Junior", Qualification.HIGH_SCHOOL, 1000),
+				1000, LocalDateTime.of(2022, 11, 19, 0, 0)));
+		employees.put(2L, new Employee(2, "Middle Jonny", new Position(1, "Mid", Qualification.COLLEGE, 2000), 2000,
+				LocalDateTime.of(2022, 5, 19, 0, 0)));
+		employees.put(3L, new Employee(3, "Middle Jonny Jr.", new Position(1, "Mid", Qualification.COLLEGE, 2000), 2000,
+				LocalDateTime.of(2022, 1, 1, 0, 0)));
+		employees.put(4L, new Employee(4, "Senio Jonny", new Position(2, "Senior", Qualification.COLLEGE, 5000), 5000,
+				LocalDateTime.of(2019, 1, 1, 0, 0)));
+		employees.put(5L, new Employee(5, "Old Jonny", new Position(3, "Architect", Qualification.UNIVERSITY, 1000),
+				10000, LocalDateTime.of(2014, 1, 1, 0, 0)));
 	}
 
 	@GetMapping("/")

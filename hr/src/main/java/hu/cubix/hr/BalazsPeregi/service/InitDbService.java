@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 import hu.cubix.hr.BalazsPeregi.model.Company;
 import hu.cubix.hr.BalazsPeregi.model.CompanyForm;
 import hu.cubix.hr.BalazsPeregi.model.Employee;
+import hu.cubix.hr.BalazsPeregi.model.Position;
+import hu.cubix.hr.BalazsPeregi.model.Qualification;
 import hu.cubix.hr.BalazsPeregi.repository.CompanyFormRepository;
 import hu.cubix.hr.BalazsPeregi.repository.CompanyRepository;
 import hu.cubix.hr.BalazsPeregi.repository.EmployeeRepository;
+import hu.cubix.hr.BalazsPeregi.repository.PositionRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -19,33 +22,43 @@ public class InitDbService {
 	private CompanyRepository companyRepo;
 	@Autowired
 	private EmployeeRepository employeeRepo;
-
 	@Autowired
 	private CompanyFormRepository companyFormRepo;
+	@Autowired
+	private PositionRepository positionRepo;
 
 	public void clearDb() {
 		employeeRepo.deleteAll();
 		companyRepo.deleteAll();
 		companyFormRepo.deleteAll();
+		positionRepo.deleteAll();
 	}
 
 	@Transactional
 	public void insertTestData() {
 
+		Position junior = positionRepo.save(new Position("Junior", Qualification.HIGH_SCHOOL, 1000));
+		Position mid = positionRepo.save(new Position("Mid", Qualification.COLLEGE, 2000));
+		Position senior = positionRepo.save(new Position("Senior", Qualification.COLLEGE, 5000));
+		Position architect = positionRepo.save(new Position("Architect", Qualification.UNIVERSITY, 1000));
+		Position tester = positionRepo.save(new Position("Tester", Qualification.COLLEGE, 1000));
+		Position manager = positionRepo.save(new Position("Manager", Qualification.PHD, 5000));
+		Position ceo = positionRepo.save(new Position("CEO", Qualification.PHD, 5000));
+
 		Employee littleJonny = employeeRepo
-				.save(new Employee("Little Jonny", "Junior", 1000, LocalDateTime.of(2022, 11, 19, 0, 0)));
+				.save(new Employee("Little Jonny", junior, 1000, LocalDateTime.of(2022, 11, 19, 0, 0)));
 		Employee middleJonny = employeeRepo
-				.save(new Employee("Middle Jonny", "Mid", 2000, LocalDateTime.of(2022, 5, 19, 0, 0)));
+				.save(new Employee("Middle Jonny", mid, 2000, LocalDateTime.of(2022, 5, 19, 0, 0)));
 		Employee middleJonnyJr = employeeRepo
-				.save(new Employee("Middle Jonny Jr.", "Mid2", 2000, LocalDateTime.of(2022, 1, 1, 0, 0)));
+				.save(new Employee("Middle Jonny Jr.", mid, 2000, LocalDateTime.of(2022, 1, 1, 0, 0)));
 		Employee seniorJonny = employeeRepo
-				.save(new Employee("Senior Jonny", "Senior", 5000, LocalDateTime.of(2019, 1, 1, 0, 0)));
+				.save(new Employee("Senior Jonny", senior, 5000, LocalDateTime.of(2019, 1, 1, 0, 0)));
 		Employee oldJonny = employeeRepo
-				.save(new Employee("Old Jonny", "Architect", 10000, LocalDateTime.of(2014, 1, 1, 0, 0)));
+				.save(new Employee("Old Jonny", architect, 10000, LocalDateTime.of(2014, 1, 1, 0, 0)));
 		Employee tesztElek = employeeRepo
-				.save(new Employee("Teszt Elek", "Tester", 1000, LocalDateTime.of(2014, 1, 1, 0, 0)));
+				.save(new Employee("Teszt Elek", tester, 1000, LocalDateTime.of(2014, 1, 1, 0, 0)));
 		Employee menedzsElek = employeeRepo
-				.save(new Employee("Menedzs Elek", "Manager", 5000, LocalDateTime.of(2022, 11, 25, 0, 0)));
+				.save(new Employee("Menedzs Elek", manager, 5000, LocalDateTime.of(2022, 11, 25, 0, 0)));
 
 		CompanyForm limitedPartnership = companyFormRepo.save(new CompanyForm("Limited Partnership"));
 		CompanyForm llc = companyFormRepo.save(new CompanyForm("LLC"));

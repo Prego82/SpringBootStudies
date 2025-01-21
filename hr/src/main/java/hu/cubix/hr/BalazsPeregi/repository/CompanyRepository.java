@@ -18,7 +18,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 	@Query("SELECT DISTINCT c FROM Company c WHERE SIZE(c.employees) > :numOfEmployees")
 	List<Company> findCompaniesWithMoreThanParameterEmployees(@Param("numOfEmployees") Integer numOfEmployees);
 
-	@Query("SELECT new hu.cubix.hr.BalazsPeregi.model.JobSalary(e.job, AVG(e.salary)) FROM Company c JOIN c.employees e WHERE c.id = :companyId GROUP BY e.job ORDER BY AVG(e.salary) DESC")
+	@Query("SELECT new hu.cubix.hr.BalazsPeregi.model.JobSalary(e.position.name, AVG(e.salary)) FROM Company c JOIN c.employees e WHERE c.id = :companyId GROUP BY e.position.name ORDER BY AVG(e.salary) DESC")
 	List<JobSalary> listAvgSalaryOfEmployees(@Param("companyId") Integer companyId);
 	// itt a JobSalary lehet egy interface is a két attributum getterjének. jpa
 	// legenerálja
