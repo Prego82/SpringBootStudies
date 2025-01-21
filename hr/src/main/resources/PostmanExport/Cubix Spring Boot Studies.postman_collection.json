@@ -470,6 +470,44 @@
 			"response": []
 		},
 		{
+			"name": "Query All Comapnies with Paging",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/companies?full=true&size=1&page=0&sort=registrationNumber",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies"
+					],
+					"query": [
+						{
+							"key": "full",
+							"value": "true"
+						},
+						{
+							"key": "size",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "sort",
+							"value": "registrationNumber"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Query All Comapnies With employee filter",
 			"request": {
 				"method": "GET",

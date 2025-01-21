@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import hu.cubix.hr.BalazsPeregi.model.Company;
@@ -39,6 +41,10 @@ public class CompanyService {
 
 	public List<Company> findAll() {
 		return repo.findAll();
+	}
+
+	public Page<Company> findAll(Pageable pageable) {
+		return repo.findAll(pageable);
 	}
 
 	public Company findById(long id) {

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +51,24 @@ public class CompanyRestController {
 			return companyMapper.companiesToDtos(companies);
 		} else {
 			return companyMapper.companiesToSummaryDtos(companies);
+		}
+	}
+
+	@GetMapping(params = "page")
+	public List<CompanyDto> queryAll(@RequestParam Optional<Boolean> full, Pageable pageable) {
+		Page<Company> companies = companyService.findAll(pageable);
+		System.out.println("companies.getTotalPages(): " + companies.getTotalPages());
+		System.out.println("companies.getNumber(): " + companies.getNumber());
+		System.out.println("companies.getTotalElements(): " + companies.getTotalElements());
+		System.out.println("companies.getNumberOfElements(): " + companies.getNumberOfElements());
+		System.out.println("companies.isFirst(): " + companies.isFirst());
+		System.out.println("companies.isLast(): " + companies.isLast());
+		System.out.println("companies.hasPrevious(): " + companies.hasPrevious());
+		System.out.println("companies.hasNext(): " + companies.hasNext());
+		if (full.orElse(false)) {
+			return companyMapper.companiesToDtos(companies.getContent());
+		} else {
+			return companyMapper.companiesToSummaryDtos(companies.getContent());
 		}
 	}
 
