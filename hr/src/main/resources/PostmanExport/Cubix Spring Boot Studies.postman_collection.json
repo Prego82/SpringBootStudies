@@ -598,7 +598,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/employees",
+					"raw": "http://localhost:8080/api/employees?job=Junior",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -611,8 +611,7 @@
 					"query": [
 						{
 							"key": "job",
-							"value": "Junior",
-							"disabled": true
+							"value": "Junior"
 						},
 						{
 							"key": "prefix",
@@ -659,6 +658,82 @@
 						"api",
 						"employees",
 						"raisePercentage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Correct Employess Salary to global minimum",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"153\",\r\n    \"name\": \"Menedzs Elek\",\r\n    \"job\": \"Manager\",\r\n    \"salary\": \"5000\",\r\n    \"startTime\": \"2020-11-25T00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees/correctMinSalaries?positionName=Architect",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"correctMinSalaries"
+					],
+					"query": [
+						{
+							"key": "positionName",
+							"value": "Architect"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Correct Employess Salary to company minimum",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"153\",\r\n    \"name\": \"Menedzs Elek\",\r\n    \"job\": \"Manager\",\r\n    \"salary\": \"5000\",\r\n    \"startTime\": \"2020-11-25T00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employees/correctCompanyMinSalaries?companyId=3802&positionName=Junior",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employees",
+						"correctCompanyMinSalaries"
+					],
+					"query": [
+						{
+							"key": "companyId",
+							"value": "3802"
+						},
+						{
+							"key": "positionName",
+							"value": "Junior"
+						}
 					]
 				}
 			},

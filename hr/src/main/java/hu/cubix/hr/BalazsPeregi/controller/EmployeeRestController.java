@@ -117,4 +117,17 @@ public class EmployeeRestController {
 			@RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDateTime startDateTo) {
 		return employeeMapper.employeesToDtos(employeeService.findByStartTimeIsBetween(startDateFrom, startDateTo));
 	}
+
+	@PostMapping("/correctMinSalaries")
+	public List<EmployeeDto> correctMinSalariesToGlobalMinOfPosition(@RequestParam String positionName) {
+		salaryService.correctMinSalariesToGlobalMinOfPosition(positionName);
+		return findEmployeeByJob(positionName);
+	}
+
+	@PostMapping("/correctCompanyMinSalaries")
+	public List<EmployeeDto> correctMinSalariesToCompanyMinOfPosition(@RequestParam long companyId,
+			@RequestParam String positionName) {
+		salaryService.correctMinSalariesToCompanyMinOfPosition(companyId, positionName);
+		return findEmployeeByJob(positionName);
+	}
 }
