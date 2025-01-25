@@ -46,17 +46,17 @@ public class CompanyRestController {
 
 	@GetMapping
 	public List<CompanyDto> queryAll(@RequestParam Optional<Boolean> full) {
-		List<Company> companies = companyService.findAll();
 		if (full.orElse(false)) {
-			return companyMapper.companiesToDtos(companies);
+			return companyMapper.companiesToDtos(companyService.findAllWithEmployees());
 		} else {
-			return companyMapper.companiesToSummaryDtos(companies);
+			return companyMapper.companiesToSummaryDtos(companyService.findAll());
 		}
 	}
 
 	@GetMapping(params = "page")
 	public List<CompanyDto> queryAll(@RequestParam Optional<Boolean> full, Pageable pageable) {
-		Page<Company> companies = companyService.findAll(pageable);
+		Page<Company> companies = full.orElse(false) ? companyService.findAllWithFetch(pageable)
+				: companyService.findAll(pageable);
 		System.out.println("companies.getTotalPages(): " + companies.getTotalPages());
 		System.out.println("companies.getNumber(): " + companies.getNumber());
 		System.out.println("companies.getTotalElements(): " + companies.getTotalElements());
@@ -87,11 +87,10 @@ public class CompanyRestController {
 
 	@GetMapping("/{id}")
 	public CompanyDto findCompany(@PathVariable long id, @RequestParam Optional<Boolean> full) {
-		Company company = companyService.findById(id);
 		if (full.orElse(false)) {
-			return companyMapper.companyToDto(company);
+			return companyMapper.companyToDto(companyService.findByIdWithFetch(id));
 		} else {
-			return companyMapper.companyToSummaryDto(company);
+			return companyMapper.companyToSummaryDto(companyService.findById(id));
 		}
 
 	}

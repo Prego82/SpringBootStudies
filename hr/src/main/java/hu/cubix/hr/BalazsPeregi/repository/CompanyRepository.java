@@ -26,4 +26,13 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
 	@Override
 	Page<Company> findAll(@SortDefault("id") Pageable pageable);
+
+	@Query("SELECT DISTINCT c FROM Company c LEFT JOIN FETCH c.employees LEFT JOIN FETCH c.form LEFT JOIN FETCH c.employees.position")
+	List<Company> findAllWithFetch();
+
+	@Query("SELECT DISTINCT c FROM Company c LEFT JOIN FETCH c.employees LEFT JOIN FETCH c.form LEFT JOIN FETCH c.employees.position")
+	Page<Company> findAllWithFetch(@SortDefault("id") Pageable pageable);
+
+	@Query("SELECT DISTINCT c FROM Company c LEFT JOIN FETCH c.employees LEFT JOIN FETCH c.form LEFT JOIN FETCH c.employees.position WHERE c.id=:id")
+	Company findByIdWithFetch(long id);
 }

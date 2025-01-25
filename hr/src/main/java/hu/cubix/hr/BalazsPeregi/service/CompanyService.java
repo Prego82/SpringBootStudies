@@ -43,12 +43,24 @@ public class CompanyService {
 		return repo.findAll();
 	}
 
+	public List<Company> findAllWithEmployees() {
+		return repo.findAllWithFetch();
+	}
+
 	public Page<Company> findAll(Pageable pageable) {
 		return repo.findAll(pageable);
 	}
 
+	public Page<Company> findAllWithFetch(Pageable pageable) {
+		return repo.findAllWithFetch(pageable);
+	}
+
 	public Company findById(long id) {
 		return repo.findById(id).orElse(null);
+	}
+
+	public Company findByIdWithFetch(long id) {
+		return repo.findByIdWithFetch(id);
 	}
 
 	@Transactional
