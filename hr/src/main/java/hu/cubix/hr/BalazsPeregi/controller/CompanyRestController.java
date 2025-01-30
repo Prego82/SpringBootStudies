@@ -114,19 +114,19 @@ public class CompanyRestController {
 	@PostMapping("/addEmployee/{companyId}")
 	public ResponseEntity<CompanyDto> addEmployeeToCompany(@PathVariable long companyId,
 			@RequestBody @Valid EmployeeDto newEmployee) {
-		Company company = companyService.findById(companyId);
-		if (company == null) {
-			return ResponseEntity.notFound().build();
+		boolean succ = companyService.addEmployeeToCompany(companyId, employeeMapper.dtoToEmployee(newEmployee));
+		if (!succ) {
+			return ResponseEntity.badRequest().build();
+		} else {
+			return ResponseEntity.ok(companyMapper.companyToDto(companyService.findByIdWithFetch(companyId)));
 		}
-		companyService.addEmployeeToCompany(company, employeeMapper.dtoToEmployee(newEmployee));
-		return ResponseEntity.ok(companyMapper.companyToDto(companyService.findById(companyId)));
 	}
 
 	@DeleteMapping("/removeEmployee/{companyId}/{employeeId}")
 	public ResponseEntity<CompanyDto> removeEmployeeFromCompany(@PathVariable long companyId,
 			@PathVariable long employeeId) {
 		if (companyService.removeEmployeeFromCompany(companyId, employeeId)) {
-			return ResponseEntity.ok(companyMapper.companyToDto(companyService.findById(companyId)));
+			return ResponseEntity.ok(companyMapper.companyToDto(companyService.findByIdWithFetch(companyId)));
 		} else {
 			return ResponseEntity.notFound().build();
 		}
@@ -137,7 +137,7 @@ public class CompanyRestController {
 			@RequestBody @Valid List<EmployeeDto> newEmployees) {
 
 		if (companyService.replaceAllEmployeesInCompany(companyId, employeeMapper.dtosToEmployees(newEmployees))) {
-			return ResponseEntity.ok(companyMapper.companyToDto(companyService.findById(companyId)));
+			return ResponseEntity.ok(companyMapper.companyToDto(companyService.findByIdWithFetch(companyId)));
 		} else {
 			return ResponseEntity.notFound().build();
 		}

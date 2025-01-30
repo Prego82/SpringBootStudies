@@ -2,7 +2,6 @@ package hu.cubix.hr.BalazsPeregi.dto;
 
 import java.time.LocalDateTime;
 
-import hu.cubix.hr.BalazsPeregi.model.Position;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Positive;
@@ -15,8 +14,8 @@ public class EmployeeDto {
 	private long id;
 	@NotEmpty
 	private String name;
-//	@NotEmpty
-	private Position position;// Throws validation exception
+	@NotEmpty
+	private String position;
 	@Positive
 	private int salary;
 	@Past
@@ -26,7 +25,7 @@ public class EmployeeDto {
 
 	}
 
-	public EmployeeDto(long id, String name, Position position, int salary, LocalDateTime startTime) {
+	public EmployeeDto(long id, String name, String position, int salary, LocalDateTime startTime) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -51,11 +50,11 @@ public class EmployeeDto {
 		this.name = name;
 	}
 
-	public Position getPosition() {
+	public String getPosition() {
 		return position;
 	}
 
-	public void setPosition(Position position) {
+	public void setPosition(String position) {
 		this.position = position;
 	}
 

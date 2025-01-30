@@ -15,8 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import hu.cubix.hr.BalazsPeregi.dto.EmployeeDto;
-import hu.cubix.hr.BalazsPeregi.model.Position;
-import hu.cubix.hr.BalazsPeregi.model.Qualification;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class EmployeeRestControllerIntegrationTest {
@@ -32,8 +30,8 @@ class EmployeeRestControllerIntegrationTest {
 		if (employeesBefore.size() > 0) {
 			newId = employeesBefore.get(employeesBefore.size() - 1).getId() + 1;
 		}
-		EmployeeDto newEmployee = new EmployeeDto(newId, "New Employee",
-				new Position(0, "Junior", Qualification.HIGH_SCHOOL, 1000), 1000, LocalDateTime.of(2022, 11, 19, 0, 0));
+		EmployeeDto newEmployee = new EmployeeDto(newId, "New Employee", "Junior", 1000,
+				LocalDateTime.of(2022, 11, 19, 0, 0));
 		addEmployee(newEmployee);
 		List<EmployeeDto> employeesAfter = getAllEmployee();
 		assertThat(employeesAfter.subList(0, employeesBefore.size())).usingRecursiveFieldByFieldElementComparator()
@@ -71,8 +69,8 @@ class EmployeeRestControllerIntegrationTest {
 	void testUpdateNotExistingEmployee() {
 		List<EmployeeDto> employeesBefore = getAllEmployee();
 		long highestId = employeesBefore.stream().max(Comparator.comparing(EmployeeDto::getId)).get().getId();
-		EmployeeDto modifiedEmployee = new EmployeeDto(highestId + 10, "Teszt Elek",
-				new Position("Tester", Qualification.COLLEGE, 1000), 1000, LocalDateTime.of(2014, 1, 1, 0, 0));
+		EmployeeDto modifiedEmployee = new EmployeeDto(highestId + 10, "Teszt Elek", "Tester", 1000,
+				LocalDateTime.of(2014, 1, 1, 0, 0));
 		webTestClient.put().uri(API_EMPLOYEES + "/{id}", modifiedEmployee.getId()).bodyValue(modifiedEmployee)
 				.exchange().expectStatus().isBadRequest();
 	}
@@ -92,8 +90,8 @@ class EmployeeRestControllerIntegrationTest {
 	void testRaisePercentNotExistingEmployee() {
 		List<EmployeeDto> employeesBefore = getAllEmployee();
 		long highestId = employeesBefore.stream().max(Comparator.comparing(EmployeeDto::getId)).get().getId();
-		EmployeeDto randomEmployee = new EmployeeDto(highestId + 10, "Teszt Elek",
-				new Position("Tester", Qualification.COLLEGE, 1000), 1000, LocalDateTime.of(2014, 1, 1, 0, 0));
+		EmployeeDto randomEmployee = new EmployeeDto(highestId + 10, "Teszt Elek", "Tester", 1000,
+				LocalDateTime.of(2014, 1, 1, 0, 0));
 		assertThat(webTestClient.post().uri(API_EMPLOYEES + "/raisePercentage").bodyValue(randomEmployee).exchange()
 				.expectStatus().isOk().expectBody(Double.class).returnResult().getResponseBody()).isEqualTo(-1d);
 	}

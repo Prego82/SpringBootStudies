@@ -29,6 +29,9 @@ public class CompanyService {
 	@Autowired
 	private CompanyFormRepository companyFormRepo;
 
+	@Autowired
+	private AbstractEmployeeService employeeService;
+
 	@Transactional
 	public Company save(Company company) {
 		CompanyForm compForm = findCompanyFormByName(company.getForm().getName());
@@ -69,9 +72,17 @@ public class CompanyService {
 	}
 
 	@Transactional
-	public void addEmployeeToCompany(Company company, Employee newEmployee) {
-		newEmployee.setCompany(company);
-		employeeRepo.save(newEmployee);
+	public boolean addEmployeeToCompany(long companyId, Employee newEmployee) {
+		Company company = repo.findByIdWithFetch(companyId);
+		if (company == null) {
+			return false;
+		}
+		Employee employeeById = employeeRepo.findById(newEmployee.getId()).orElse(null);
+		if (employeeById == null) {
+			employeeById = employeeService.save(newEmployee);
+		}
+		company.addEmployee(employeeById);
+		return true;
 	}
 
 	@Transactional
@@ -100,8 +111,11 @@ public class CompanyService {
 		company.get().getEmployees().clear();
 		// Add employees to the company
 		employees.forEach(emp -> {
-			company.get().addEmployee(emp);
-			employeeRepo.save(emp);
+			Employee employeeById = employeeRepo.findById(emp.getId()).orElse(null);
+			if (employeeById == null) {
+				employeeById = employeeService.save(emp);
+			}
+			company.get().addEmployee(employeeById);
 		});
 		return true;
 	}

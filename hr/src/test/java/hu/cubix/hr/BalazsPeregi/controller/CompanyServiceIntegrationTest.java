@@ -77,7 +77,7 @@ public class CompanyServiceIntegrationTest {
 		long companyId = companies.get(randomCompanyIndex).getId();
 
 		// Act
-		service.addEmployeeToCompany(companies.get(randomCompanyIndex), employees.get(randomEmployeeIndex));
+		service.addEmployeeToCompany(companyId, employees.get(randomEmployeeIndex));
 		// Assert
 		Company modifiedCompany = service.findByIdWithFetch(companyId);
 		assertThat(modifiedCompany.getName()).isEqualTo("Apple");
