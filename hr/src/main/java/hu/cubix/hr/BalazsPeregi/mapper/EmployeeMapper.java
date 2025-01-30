@@ -13,6 +13,7 @@ import hu.cubix.hr.BalazsPeregi.model.Employee;
 public interface EmployeeMapper {
 
 	@Mapping(source = "position.name", target = "position")
+	@Mapping(source = "company.name", target = "job")
 	public EmployeeDto employeeToDto(Employee employee);
 
 	public List<EmployeeDto> employeesToDtos(List<Employee> employees);

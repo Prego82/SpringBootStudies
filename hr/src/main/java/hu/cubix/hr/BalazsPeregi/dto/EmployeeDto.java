@@ -21,6 +21,8 @@ public class EmployeeDto {
 	@Past
 	private LocalDateTime startTime;
 
+	private String job;
+
 	public EmployeeDto() {
 
 	}
@@ -73,4 +75,13 @@ public class EmployeeDto {
 	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
 }

@@ -130,4 +130,13 @@ public class EmployeeRestController {
 		salaryService.correctMinSalariesToCompanyMinOfPosition(companyId, positionName);
 		return findEmployeeByJob(positionName);
 	}
+
+	@GetMapping("/dynamic")
+	public ResponseEntity<List<EmployeeDto>> findEmplyoyeeDinamically(@RequestBody EmployeeDto employeeDto) {
+		List<Employee> employeesFound = employeeService.findAllDynamically(employeeMapper.dtoToEmployee(employeeDto));
+		if (employeesFound.isEmpty()) {
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok(employeeMapper.employeesToDtos(employeesFound));
+	}
 }
