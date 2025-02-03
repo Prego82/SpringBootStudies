@@ -14,6 +14,7 @@ import hu.cubix.hr.BalazsPeregi.model.Qualification;
 import hu.cubix.hr.BalazsPeregi.repository.CompanyFormRepository;
 import hu.cubix.hr.BalazsPeregi.repository.CompanyRepository;
 import hu.cubix.hr.BalazsPeregi.repository.EmployeeRepository;
+import hu.cubix.hr.BalazsPeregi.repository.HolidayRepo;
 import hu.cubix.hr.BalazsPeregi.repository.PositionDetailsByCompanyRepository;
 import hu.cubix.hr.BalazsPeregi.repository.PositionRepository;
 import jakarta.transaction.Transactional;
@@ -31,7 +32,11 @@ public class InitDbService {
 	@Autowired
 	private PositionDetailsByCompanyRepository positionDetailsRepo;
 
+	@Autowired
+	private HolidayRepo holidayRepo;
+
 	public void clearDb() {
+		holidayRepo.deleteAll();
 		positionDetailsRepo.deleteAll();
 		employeeRepo.deleteAll();
 		companyRepo.deleteAll();
