@@ -360,7 +360,7 @@ public class HolidayRequestIntegrationTest {
 		Employee employee = employeeService.findByJob("Junior").get(0);
 		HolidayRequestDto newHoliday = new HolidayRequestDto(0l, employee.getId(), LocalDateTime.of(2125, 11, 19, 0, 0),
 				LocalDateTime.of(2125, 11, 28, 0, 0), LocalDateTime.of(2025, 01, 01, 0, 0), manager.getId(),
-				HolidayRequestStatus.ACCEPTED);
+				HolidayRequestStatus.NEW);
 		webTestClient.post().uri(API_HOLIDAY).bodyValue(newHoliday).exchange().expectStatus().isOk();
 
 		HolidayRequestDto newHoliday2 = new HolidayRequestDto(0l, employee.getId(),
@@ -383,9 +383,9 @@ public class HolidayRequestIntegrationTest {
 				.returnResult().getResponseBody();
 		assertThat(allHolidays.size()).isEqualTo(2);
 		HolidayRequestDto modifiedHoliday1 = allHolidays.get(0);
-		assertThat(modifiedHoliday1.getCreationDate()).isEqualTo(LocalDateTime.of(2024, 12, 01, 0, 0));
+		assertThat(modifiedHoliday1.getCreationDate()).isEqualTo(newHoliday3.getCreationDate());
 		HolidayRequestDto modifiedHoliday2 = allHolidays.get(1);
-		assertThat(modifiedHoliday2.getCreationDate()).isEqualTo(LocalDateTime.of(2024, 12, 01, 0, 0));
+		assertThat(modifiedHoliday2.getCreationDate()).isEqualTo(newHoliday2.getCreationDate());
 	}
 
 	@Test
@@ -417,11 +417,11 @@ public class HolidayRequestIntegrationTest {
 				.returnResult().getResponseBody();
 		assertThat(allHolidays.size()).isEqualTo(2);
 		HolidayRequestDto modifiedHoliday1 = allHolidays.get(0);
-		assertThat(modifiedHoliday1.getStartDate()).isEqualTo(LocalDateTime.of(2125, 03, 19, 0, 0));
-		assertThat(modifiedHoliday1.getEndDate()).isEqualTo(LocalDateTime.of(2125, 10, 28, 0, 0));
+		assertThat(modifiedHoliday1.getStartDate()).isEqualTo(newHoliday3.getStartDate());
+		assertThat(modifiedHoliday1.getEndDate()).isEqualTo(newHoliday3.getEndDate());
 		HolidayRequestDto modifiedHoliday2 = allHolidays.get(1);
-		assertThat(modifiedHoliday2.getStartDate()).isEqualTo(LocalDateTime.of(2125, 04, 19, 0, 0));
-		assertThat(modifiedHoliday2.getEndDate()).isEqualTo(LocalDateTime.of(2125, 9, 28, 0, 0));
+		assertThat(modifiedHoliday2.getStartDate()).isEqualTo(newHoliday2.getStartDate());
+		assertThat(modifiedHoliday2.getEndDate()).isEqualTo(newHoliday2.getEndDate());
 	}
 
 	private List<HolidayRequestDto> getAllHolidays() {

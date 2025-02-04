@@ -28,13 +28,13 @@ public class HolidaySpecifications {
 
 	public static Specification<HolidayRequest> creationDate(LocalDateTime startTime, LocalDateTime endTime) {
 		LocalDateTime startOfDay = LocalDateTime.of(startTime.toLocalDate(), LocalTime.MIDNIGHT);
-		LocalDateTime endOfDay = LocalDateTime.of(startTime.toLocalDate(), LocalTime.MAX);
+		LocalDateTime endOfDay = LocalDateTime.of(endTime.toLocalDate(), LocalTime.MAX);
 		return (root, cq, cb) -> cb.between(root.get(HolidayRequest_.creationDate), startOfDay, endOfDay);
 	}
 
 	public static Specification<HolidayRequest> holidayTimeInterval(LocalDateTime startTime, LocalDateTime endTime) {
 		LocalDateTime startOfDay = LocalDateTime.of(startTime.toLocalDate(), LocalTime.MIDNIGHT);
-		LocalDateTime endOfDay = LocalDateTime.of(startTime.toLocalDate(), LocalTime.MAX);
+		LocalDateTime endOfDay = LocalDateTime.of(endTime.toLocalDate(), LocalTime.MAX);
 		return (root, cq, cb) -> cb.and(cb.greaterThanOrEqualTo(root.get(HolidayRequest_.startDate), startOfDay),
 				cb.lessThanOrEqualTo(root.get(HolidayRequest_.endDate), endOfDay));
 	}
