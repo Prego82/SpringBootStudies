@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -17,6 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import hu.cubix.hr.BalazsPeregi.dto.EmployeeDto;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestDatabase
 class EmployeeRestControllerIntegrationTest {
 
 	private static final String API_EMPLOYEES = "/api/employees";
@@ -30,8 +32,8 @@ class EmployeeRestControllerIntegrationTest {
 		if (employeesBefore.size() > 0) {
 			newId = employeesBefore.get(employeesBefore.size() - 1).getId() + 1;
 		}
-		EmployeeDto newEmployee = new EmployeeDto(newId, "New Employee", "Junior", 1000,
-				LocalDateTime.of(2022, 11, 19, 0, 0));
+		EmployeeDto newEmployee = new EmployeeDto(newId, "New Employee", "user", "pass", "Junior", 1000,
+				LocalDateTime.of(2022, 11, 19, 0, 0), 0);
 		addEmployee(newEmployee);
 		List<EmployeeDto> employeesAfter = getAllEmployee();
 		assertThat(employeesAfter.subList(0, employeesBefore.size())).usingRecursiveFieldByFieldElementComparator()
@@ -47,8 +49,10 @@ class EmployeeRestControllerIntegrationTest {
 		List<EmployeeDto> employeesBefore = getAllEmployee();
 		int randomIndex = ThreadLocalRandom.current().nextInt(employeesBefore.size());
 		EmployeeDto newEmployee = new EmployeeDto(employeesBefore.get(randomIndex).getId(),
-				employeesBefore.get(randomIndex).getName(), employeesBefore.get(randomIndex).getPosition(),
-				employeesBefore.get(randomIndex).getSalary(), employeesBefore.get(randomIndex).getStartTime());
+				employeesBefore.get(randomIndex).getName(), employeesBefore.get(randomIndex).getUsername(),
+				employeesBefore.get(randomIndex).getPassword(), employeesBefore.get(randomIndex).getPosition(),
+				employeesBefore.get(randomIndex).getSalary(), employeesBefore.get(randomIndex).getStartTime(),
+				employeesBefore.get(randomIndex).getManagerId());
 		webTestClient.post().uri(API_EMPLOYEES).bodyValue(newEmployee).exchange().expectStatus().isBadRequest();
 	}
 
@@ -58,8 +62,10 @@ class EmployeeRestControllerIntegrationTest {
 		int randomIndex = ThreadLocalRandom.current().nextInt(employeesBefore.size());
 		int newSalary = 99999;
 		EmployeeDto modifiedEmployee = new EmployeeDto(employeesBefore.get(randomIndex).getId(),
-				employeesBefore.get(randomIndex).getName(), employeesBefore.get(randomIndex).getPosition(), newSalary,
-				employeesBefore.get(randomIndex).getStartTime());
+				employeesBefore.get(randomIndex).getName(), employeesBefore.get(randomIndex).getUsername(),
+				employeesBefore.get(randomIndex).getPassword(), employeesBefore.get(randomIndex).getPosition(),
+				newSalary, employeesBefore.get(randomIndex).getStartTime(),
+				employeesBefore.get(randomIndex).getManagerId());
 		updateEmployee(modifiedEmployee);
 		List<EmployeeDto> employeesAfter = getAllEmployee();
 		assertThat(employeesAfter.get(randomIndex).getSalary()).isEqualTo(newSalary);
@@ -69,8 +75,8 @@ class EmployeeRestControllerIntegrationTest {
 	void testUpdateNotExistingEmployee() {
 		List<EmployeeDto> employeesBefore = getAllEmployee();
 		long highestId = employeesBefore.stream().max(Comparator.comparing(EmployeeDto::getId)).get().getId();
-		EmployeeDto modifiedEmployee = new EmployeeDto(highestId + 10, "Teszt Elek", "Tester", 1000,
-				LocalDateTime.of(2014, 1, 1, 0, 0));
+		EmployeeDto modifiedEmployee = new EmployeeDto(highestId + 10, "Teszt Elek", "user", "pass", "Tester", 1000,
+				LocalDateTime.of(2014, 1, 1, 0, 0), 0);
 		webTestClient.put().uri(API_EMPLOYEES + "/{id}", modifiedEmployee.getId()).bodyValue(modifiedEmployee)
 				.exchange().expectStatus().isBadRequest();
 	}
@@ -80,8 +86,10 @@ class EmployeeRestControllerIntegrationTest {
 		List<EmployeeDto> employeesBefore = getAllEmployee();
 		int randomIndex = ThreadLocalRandom.current().nextInt(employeesBefore.size());
 		EmployeeDto employee = new EmployeeDto(employeesBefore.get(randomIndex).getId(),
-				employeesBefore.get(randomIndex).getName(), employeesBefore.get(randomIndex).getPosition(),
-				employeesBefore.get(randomIndex).getSalary(), employeesBefore.get(randomIndex).getStartTime());
+				employeesBefore.get(randomIndex).getName(), employeesBefore.get(randomIndex).getUsername(),
+				employeesBefore.get(randomIndex).getPassword(), employeesBefore.get(randomIndex).getPosition(),
+				employeesBefore.get(randomIndex).getSalary(), employeesBefore.get(randomIndex).getStartTime(),
+				employeesBefore.get(randomIndex).getManagerId());
 		double raisedSalaryPercent = queryRaisePercent(employee);
 		// What should I assert here?
 	}
@@ -90,8 +98,8 @@ class EmployeeRestControllerIntegrationTest {
 	void testRaisePercentNotExistingEmployee() {
 		List<EmployeeDto> employeesBefore = getAllEmployee();
 		long highestId = employeesBefore.stream().max(Comparator.comparing(EmployeeDto::getId)).get().getId();
-		EmployeeDto randomEmployee = new EmployeeDto(highestId + 10, "Teszt Elek", "Tester", 1000,
-				LocalDateTime.of(2014, 1, 1, 0, 0));
+		EmployeeDto randomEmployee = new EmployeeDto(highestId + 10, "Teszt Elek", "user", "pass", "Tester", 1000,
+				LocalDateTime.of(2014, 1, 1, 0, 0), 0);
 		assertThat(webTestClient.post().uri(API_EMPLOYEES + "/raisePercentage").bodyValue(randomEmployee).exchange()
 				.expectStatus().isOk().expectBody(Double.class).returnResult().getResponseBody()).isEqualTo(-1d);
 	}

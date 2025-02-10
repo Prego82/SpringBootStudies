@@ -3,6 +3,7 @@ package hu.cubix.hr.BalazsPeregi.service;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import hu.cubix.hr.BalazsPeregi.model.Company;
@@ -31,6 +32,8 @@ public class InitDbService {
 	private PositionRepository positionRepo;
 	@Autowired
 	private PositionDetailsByCompanyRepository positionDetailsRepo;
+	@Autowired
+	private PasswordEncoder pwdEncoder;
 
 	@Autowired
 	private HolidayRepo holidayRepo;
@@ -55,20 +58,20 @@ public class InitDbService {
 		Position manager = positionRepo.save(new Position("Manager", Qualification.PHD, 5000));
 		Position ceo = positionRepo.save(new Position("CEO", Qualification.PHD, 5000));
 
-		Employee littleJonny = employeeRepo
-				.save(new Employee("Little Jonny", junior, 1000, LocalDateTime.of(2022, 11, 19, 0, 0)));
-		Employee middleJonny = employeeRepo
-				.save(new Employee("Middle Jonny", mid, 2000, LocalDateTime.of(2022, 5, 19, 0, 0)));
-		Employee middleJonnyJr = employeeRepo
-				.save(new Employee("Middle Jonny Jr.", mid, 2000, LocalDateTime.of(2022, 1, 1, 0, 0)));
-		Employee seniorJonny = employeeRepo
-				.save(new Employee("Senior Jonny", senior, 5000, LocalDateTime.of(2019, 1, 1, 0, 0)));
-		Employee oldJonny = employeeRepo
-				.save(new Employee("Old Jonny", architect, 1000, LocalDateTime.of(2014, 1, 1, 0, 0)));
-		Employee tesztElek = employeeRepo
-				.save(new Employee("Teszt Elek", tester, 1000, LocalDateTime.of(2014, 1, 1, 0, 0)));
-		Employee menedzsElek = employeeRepo
-				.save(new Employee("Menedzs Elek", manager, 5000, LocalDateTime.of(2022, 11, 25, 0, 0)));
+		Employee menedzsElek = employeeRepo.save(new Employee("Menedzs Elek", "user", pwdEncoder.encode("pass"),
+				manager, 5000, LocalDateTime.of(2022, 11, 25, 0, 0), null));
+		Employee littleJonny = employeeRepo.save(new Employee("Little Jonny", "user", pwdEncoder.encode("pass"), junior,
+				1000, LocalDateTime.of(2022, 11, 19, 0, 0), menedzsElek));
+		Employee middleJonny = employeeRepo.save(new Employee("Middle Jonny", "user", pwdEncoder.encode("pass"), mid,
+				2000, LocalDateTime.of(2022, 5, 19, 0, 0), menedzsElek));
+		Employee middleJonnyJr = employeeRepo.save(new Employee("Middle Jonny Jr.", "user", pwdEncoder.encode("pass"),
+				mid, 2000, LocalDateTime.of(2022, 1, 1, 0, 0), menedzsElek));
+		Employee seniorJonny = employeeRepo.save(new Employee("Senior Jonny", "user", pwdEncoder.encode("pass"), senior,
+				5000, LocalDateTime.of(2019, 1, 1, 0, 0), menedzsElek));
+		Employee oldJonny = employeeRepo.save(new Employee("Old Jonny", "user", pwdEncoder.encode("pass"), architect,
+				1000, LocalDateTime.of(2014, 1, 1, 0, 0), menedzsElek));
+		Employee tesztElek = employeeRepo.save(new Employee("Teszt Elek", "user", pwdEncoder.encode("pass"), tester,
+				1000, LocalDateTime.of(2014, 1, 1, 0, 0), menedzsElek));
 
 		CompanyForm limitedPartnership = companyFormRepo.save(new CompanyForm("Limited Partnership"));
 		CompanyForm llc = companyFormRepo.save(new CompanyForm("LLC"));

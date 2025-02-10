@@ -20,7 +20,7 @@
 			<tr th:each="employee : ${employees}">
 				<td colspan="2" style="padding: 10px;" th:text="${employee.id}"></td>
 				<td colspan="2" style="padding: 10px;"><a th:href="@{/{id}(id=${employee.id})}" th:text="${employee.name}"></a></td>
-				<td colspan="2" style="padding: 10px;" th:text="${employee.job}"></td>
+				<td colspan="2" style="padding: 10px;" th:text="${employee.position.name}"></td>
 				<td colspan="2" style="padding: 10px;" th:text="${employee.salary}"></td>
 				<td colspan="2" style="padding: 10px;"
 					th:text="${employee.startTime}"></td>
@@ -45,7 +45,7 @@
 				<tr>
 					<td colspan="2" style="padding: 10px;"><label for="job">Job:</label></td>
 					<td colspan="2" style="padding: 10px;"><input id="job"
-						th:field="*{job}" /></td>
+						th:field="*{position.name}" /></td>
 				</tr>
 				<tr>
 					<td colspan="2" style="padding: 10px;"><label for="salary">Salary:</label></td>

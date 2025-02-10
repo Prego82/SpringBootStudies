@@ -53,8 +53,8 @@ public class CompanyServiceIntegrationTest {
 		assertThat(companies.get(3).getEmployees().get(0).getName()).isEqualTo("Senior Jonny");
 
 		assertThat(companies.get(4).getName()).isEqualTo("AMD");
-		assertThat(companies.get(4).getEmployees().get(0).getName()).isEqualTo("Old Jonny");
-		assertThat(companies.get(4).getEmployees().get(1).getName()).isEqualTo("Menedzs Elek");
+		assertThat(companies.get(4).getEmployees()).extracting(Employee::getName).containsExactlyInAnyOrder("Old Jonny",
+				"Menedzs Elek");
 	}
 
 	@Test
@@ -63,8 +63,8 @@ public class CompanyServiceIntegrationTest {
 		long id = companies.get(0).getId();
 		Company company = service.findByIdWithFetch(id);
 		assertThat(company.getName()).isEqualTo("Apple");
-		assertThat(company.getEmployees().get(0).getName()).isEqualTo("Little Jonny");
-		assertThat(company.getEmployees().get(1).getName()).isEqualTo("Teszt Elek");
+		assertThat(company.getEmployees()).extracting(Employee::getName).containsExactlyInAnyOrder("Little Jonny",
+				"Teszt Elek");
 	}
 
 	@Test
@@ -82,9 +82,8 @@ public class CompanyServiceIntegrationTest {
 		Company modifiedCompany = service.findByIdWithFetch(companyId);
 		assertThat(modifiedCompany.getName()).isEqualTo("Apple");
 		assertThat(modifiedCompany.getEmployees().size()).isEqualTo(3);
-		assertThat(modifiedCompany.getEmployees().get(0).getName()).isEqualTo("Little Jonny");
-		assertThat(modifiedCompany.getEmployees().get(1).getName()).isEqualTo("Teszt Elek");
-		assertThat(modifiedCompany.getEmployees().get(2).getName()).isEqualTo("Menedzs Elek");
+		assertThat(modifiedCompany.getEmployees()).extracting(Employee::getName)
+				.containsExactlyInAnyOrder("Little Jonny", "Teszt Elek", "Menedzs Elek");
 	}
 
 	@Test
@@ -120,12 +119,8 @@ public class CompanyServiceIntegrationTest {
 		Company modifiedCompany = service.findByIdWithFetch(companyId);
 		assertThat(modifiedCompany.getName()).isEqualTo("AMD");
 		assertThat(modifiedCompany.getEmployees().size()).isEqualTo(7);
-		assertThat(modifiedCompany.getEmployees().get(0).getName()).isEqualTo("Little Jonny");
-		assertThat(modifiedCompany.getEmployees().get(1).getName()).isEqualTo("Middle Jonny");
-		assertThat(modifiedCompany.getEmployees().get(2).getName()).isEqualTo("Middle Jonny Jr.");
-		assertThat(modifiedCompany.getEmployees().get(3).getName()).isEqualTo("Senior Jonny");
-		assertThat(modifiedCompany.getEmployees().get(4).getName()).isEqualTo("Old Jonny");
-		assertThat(modifiedCompany.getEmployees().get(5).getName()).isEqualTo("Teszt Elek");
-		assertThat(modifiedCompany.getEmployees().get(6).getName()).isEqualTo("Menedzs Elek");
+		assertThat(modifiedCompany.getEmployees()).extracting(Employee::getName).containsExactlyInAnyOrder(
+				"Little Jonny", "Middle Jonny", "Middle Jonny Jr.", "Senior Jonny", "Old Jonny", "Teszt Elek",
+				"Menedzs Elek");
 	}
 }
