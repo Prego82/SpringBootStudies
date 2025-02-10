@@ -2,6 +2,7 @@ package hu.cubix.hr.BalazsPeregi.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -30,5 +31,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 			+ "AND e.salary<(SELECT pd.minSalary FROM PositionDetailsByCompany pd WHERE pd.position.name=:positionName AND pd.company.id=:companyId)")
 	@Modifying
 	void updateSalariesToCompanyMin(long companyId, String positionName);
+
+	Optional<Employee> findByUsername(String username);
 
 }

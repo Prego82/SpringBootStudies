@@ -18,30 +18,42 @@ public class Employee {
 	@GeneratedValue
 	private long id;
 	private String name;
+	private String username;
+	private String password;
 	@ManyToOne
 	private Position position;
 	private int salary;
 	private LocalDateTime startTime;
 	@ManyToOne
 	private Company company;
+	@ManyToOne
+	private Employee manager;
 
 	public Employee() {
 	}
 
-	public Employee(long id, String name, Position position, int salary, LocalDateTime startTime) {
+	public Employee(long id, String name, String username, String password, Position position, int salary,
+			LocalDateTime startTime, Employee manager) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.username = username;
+		this.password = password;
 		this.position = position;
 		this.salary = salary;
 		this.startTime = startTime;
+		this.manager = manager;
 	}
 
-	public Employee(String name, Position position, int salary, LocalDateTime startTime) {
+	public Employee(String name, String username, String password, Position position, int salary,
+			LocalDateTime startTime, Employee manager) {
 		this.name = name;
+		this.username = username;
+		this.password = password;
 		this.position = position;
 		this.salary = salary;
 		this.startTime = startTime;
+		this.manager = manager;
 	}
 
 	public long getId() {
@@ -58,6 +70,22 @@ public class Employee {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Position getPosition() {
@@ -90,6 +118,14 @@ public class Employee {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public Employee getManager() {
+		return manager;
+	}
+
+	public void setManager(Employee manager) {
+		this.manager = manager;
 	}
 
 	@Override

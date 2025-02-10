@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import hu.cubix.hr.BalazsPeregi.model.Employee;
 import hu.cubix.hr.BalazsPeregi.model.Position;
@@ -22,16 +23,14 @@ public class HrApplication implements CommandLineRunner {
 	@Autowired
 	InitDbService init;
 
-	private Employee junior = new Employee(1, "Little Jonny",
-			new Position(0, "Junior", Qualification.HIGH_SCHOOL, 1000), 1000, LocalDateTime.of(2022, 11, 19, 0, 0));
-	private Employee mid = new Employee(2, "Middle Jonny", new Position(1, "Mid", Qualification.COLLEGE, 2000), 2000,
-			LocalDateTime.of(2022, 5, 19, 0, 0));
-	private Employee mid2 = new Employee(3, "Middle Jonny Jr.", new Position(1, "Mid", Qualification.COLLEGE, 2000),
-			2000, LocalDateTime.of(2022, 1, 1, 0, 0));
-	private Employee senior = new Employee(4, "Senio Jonny", new Position(2, "Senior", Qualification.COLLEGE, 5000),
-			5000, LocalDateTime.of(2019, 1, 1, 0, 0));
-	private Employee architect = new Employee(5, "Old Jonny",
-			new Position(3, "Architect", Qualification.UNIVERSITY, 1000), 10000, LocalDateTime.of(2014, 1, 1, 0, 0));
+	@Autowired
+	private PasswordEncoder pwdEncoder;
+
+	private Employee junior;
+	private Employee mid;
+	private Employee mid2;
+	private Employee senior;
+	private Employee architect;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HrApplication.class, args);
@@ -39,6 +38,7 @@ public class HrApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		initEmployees();
 		System.err.println("Salaries before raise: ");
 		printAllEmployees();
 		salaryService.setNewSalary(junior);
@@ -50,6 +50,21 @@ public class HrApplication implements CommandLineRunner {
 		printAllEmployees();
 		init.clearDb();
 		init.insertTestData();
+	}
+
+	private void initEmployees() {
+		junior = new Employee(1, "Little Jonny", "user", pwdEncoder.encode("pass"),
+				new Position(0, "Junior", Qualification.HIGH_SCHOOL, 1000), 1000, LocalDateTime.of(2022, 11, 19, 0, 0),
+				null);
+		mid = new Employee(2, "Middle Jonny", "user", pwdEncoder.encode("pass"),
+				new Position(1, "Mid", Qualification.COLLEGE, 2000), 2000, LocalDateTime.of(2022, 5, 19, 0, 0), null);
+		mid2 = new Employee(3, "Middle Jonny Jr.", "user", pwdEncoder.encode("pass"),
+				new Position(1, "Mid", Qualification.COLLEGE, 2000), 2000, LocalDateTime.of(2022, 1, 1, 0, 0), null);
+		senior = new Employee(4, "Senio Jonny", "user", pwdEncoder.encode("pass"),
+				new Position(2, "Senior", Qualification.COLLEGE, 5000), 5000, LocalDateTime.of(2019, 1, 1, 0, 0), null);
+		architect = new Employee(5, "Old Jonny", "user", pwdEncoder.encode("pass"),
+				new Position(3, "Architect", Qualification.UNIVERSITY, 1000), 10000, LocalDateTime.of(2014, 1, 1, 0, 0),
+				null);
 	}
 
 	/**

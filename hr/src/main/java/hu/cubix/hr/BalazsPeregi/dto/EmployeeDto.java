@@ -15,11 +15,17 @@ public class EmployeeDto {
 	@NotEmpty
 	private String name;
 	@NotEmpty
+	private String username;
+	@NotEmpty
+	private String password;
+	@NotEmpty
 	private String position;
 	@Positive
 	private int salary;
 	@Past
 	private LocalDateTime startTime;
+
+	private long managerId;
 
 	private String job;
 
@@ -27,13 +33,17 @@ public class EmployeeDto {
 
 	}
 
-	public EmployeeDto(long id, String name, String position, int salary, LocalDateTime startTime) {
+	public EmployeeDto(long id, String name, String username, String password, String position, int salary,
+			LocalDateTime startTime, long managerId) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.username = username;
+		this.password = password;
 		this.position = position;
 		this.salary = salary;
 		this.startTime = startTime;
+		this.managerId = managerId;
 	}
 
 	public long getId() {
@@ -50,6 +60,22 @@ public class EmployeeDto {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getPosition() {
@@ -82,6 +108,14 @@ public class EmployeeDto {
 
 	public void setJob(String job) {
 		this.job = job;
+	}
+
+	public long getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(long managerId) {
+		this.managerId = managerId;
 	}
 
 }
